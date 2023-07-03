@@ -17,7 +17,7 @@ class Surface:
     Attributes
     ----------
     surface : ndarray or pandas
-        coordinate array of ``x``, ``y``, ``z`` points and ``nx``, ``ny`` and ``nz`` versors
+        coordinate array of ``x``, ``y``, ``z`` points and ``nx``, ``ny`` and ``nz`` unit vectors
     patch_num : int
     r0 : float
         the radius of the patch. The unit of measurement depends on that of the points in ``surface``

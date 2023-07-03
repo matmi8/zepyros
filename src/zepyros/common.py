@@ -1,6 +1,5 @@
 import numpy as np
 import sys
-import matplotlib.pyplot as mpl
 
 
 def rotate_matrix(cos, sin, axis):
@@ -44,11 +43,30 @@ def rotate_matrix(cos, sin, axis):
     return rotated_matrix
 
 
-def rotate_patch(patch, mean_normal_v, axis_z_or, pin):
+def rotate_patch(patch, v_start, v_z, pin):
     """
-    Doc me!
+    Rotates a set of points by an angle defined by a given unit vector
+    and the z axis with a positive or negative direction
+
+    Parameters
+    ----------
+    `patch`: ndarray
+        array of points that make up the portion of the surface to orient.
+        If the array contains more than three columns, only the first three will be selected
+    `v_start`: ndarray
+        array of shape (1, 3) which indicates the initial unit vector to orient
+        and make coincide with the z axis
+    `v_z`: ndarray
+        array of shape (1, 3) indicating the positive (0, 0, 1)
+        or negative (0, 0, -1) oriented z-axis unit vector
+    `pin`: ndarray
+        array of shape (1, 3) indicating the origin of ``v_start``
+
+    Return
+    ------
+    `tuple`
+        # TODO: add return docs
     """
-    # TODO: add documentation
     xy = True
     yz = True
     # xz = True   # unused
@@ -59,9 +77,9 @@ def rotate_patch(patch, mean_normal_v, axis_z_or, pin):
 
     n_points = np.shape(patch_trans)[0]
 
-    # defining rotating vectors...
-    r_z = np.array([0, 0, axis_z_or])
-    r_vn = mean_normal_v.copy()  # np.mean(normal_v, axis=0) #nter_atom_pos[1, :]
+    # defining rotating vectors
+    r_z = np.array([0, 0, v_z])
+    r_vn = v_start.copy()  # np.mean(normal_v, axis=0) #nter_atom_pos[1, :]
 
     p = np.abs(1 - r_z.dot(r_vn) / np.sqrt((r_z.dot(r_z)) * (r_vn.dot(r_vn))))
 
@@ -87,7 +105,7 @@ def rotate_patch(patch, mean_normal_v, axis_z_or, pin):
         # r2 = np.array([r_z[1], r_z[2]])   # unused
         r1 /= np.sqrt(r1.dot(r1))
 
-        if axis_z_or > 0:
+        if v_z > 0:
             cos_theta = r1[1]
             sin_theta = r1[0]
         else:
@@ -231,11 +249,11 @@ def isolate_surfaces(surface, min_d=1.):
     return surf_label
 
 
-def find_border(new_plane_ab):
+def _find_border(new_plane_ab):
     """
     This function finds the border of a figure in the plane...
     """
-    # TODO: add documentation
+    # TODO: add documentation. DEPRECATED
     a, b = np.shape(new_plane_ab)
     p_h = np.ones((a, b))
     p_v = np.ones((a, b))
@@ -332,19 +350,6 @@ def contact_points(list_1, list_2, thresh):
     return contact_1[1:, :], contact_2[1:, :], list_index_1, list_index_2
 
 
-def eig_rotation(points, eig_vec):
-    rot = np.transpose(np.dot(np.transpose(eig_vec), np.transpose(points)))
-    return rot
-
-
-# TODO: what is this?
-def plot_3d_points_and_vectors(x, y, z, u, v, w, color=None):
-    if color is None:
-        color = []
-    ll = len(x)
-    mask = np.random.choice(np.arange(ll), 100, replace=False)
-
-
 def build_cone(z_max, n_disk):
     dz = z_max / float(n_disk)
     z = 0
@@ -379,14 +384,14 @@ def concatenate_fig_plots(list_):
     return res, col
 
 
-def fix_bridge_real_bs(patch_ab, patch_ag, d_pp):
+def _fix_bridge_real_bs(patch_ab, patch_ag, d_pp):
     """
     This function isolates the different groups of points in two given sets (patches)
     according to a cutoff distance Dpp.
     It associates each group to the closest group of the other set and returns
     a list of matched patches.
     """
-    # TODO: add documentation
+    # TODO: add documentation. Maybe deprecated?
     # processing  patches to remove islands
     # ab
     index_ab_bd_ = isolate_surfaces(patch_ab, d_pp)
@@ -458,7 +463,8 @@ def fix_bridge_real_bs(patch_ab, patch_ag, d_pp):
     return patch_ab_list, patch_ag_list
 
 
-def isolate_isosurface(my_prot, min_v, max_v):
+def _isolate_isosurface(my_prot, min_v, max_v):
+    # TODO: maybe deprecated?
     # This function groups points nearer than minD
 
     _DEB_ = 0
@@ -566,7 +572,7 @@ def isolate_isosurface(my_prot, min_v, max_v):
 
 def log10_factorial(n):
     """
-    Compute log10(n) factorial
+    Compute ``log(n!)`` with the base 10 logarithm
 
     Parameters
     ----------
@@ -576,7 +582,7 @@ def log10_factorial(n):
     Return
     ------
     real
-        Factorial of log10(n): ``log(n)! = log(n) + log(n-1) + ... + log(1)``
+        Factorial of log10(n): ``log(n!) = log(n) + log(n-1) + ... + log(1)``
 
     Examples
     --------
