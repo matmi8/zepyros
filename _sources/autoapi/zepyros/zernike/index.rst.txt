@@ -1,0 +1,175 @@
+:py:mod:`zepyros.zernike`
+=========================
+
+.. py:module:: zepyros.zernike
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   zepyros.zernike.Zernike3D
+   zepyros.zernike.Zernike2D
+
+
+
+
+.. py:class:: Zernike3D(n_l)
+
+
+   This class performs the 3D decomposition of a (voxelized) shape in the Zernike
+   basis up to a given expansion order.
+
+   .. py:method:: prepare_zernike(n_l=128)
+
+      This function initializes the quantities need to fastly compute zernike moments.
+      It takes as input the voxel grid edge.
+
+
+   .. py:method:: prepare_image(image_file)
+
+      This function read a dx file and return a 3 x Nl linear array containing the value of each voxel.
+      It also computes the Nl value assuming that the voxelization was performed on a Nl x Nl x Nl cube.
+
+
+   .. py:method:: epsilon(l, m)
+
+      This function computes the epsilon term of the Zernike moment, Z_nl^m = epsilon(l,m)*R(n,l)
+
+
+   .. py:method:: c_lm(l, m)
+
+      This function computes one of the terms of epsilon(l,m)
+
+
+   .. py:method:: q_klv(k, l, v)
+
+      This function computes one of the  terms of R(n,l).
+
+
+   .. py:method:: r_nl(n, l)
+
+      This function computes the R term of the Zernike moment, Z_nl^m = epsilon(l,m)*R(n,l)
+
+
+   .. py:method:: compute_3d_moment(n=0, l=0, m=0, DICT_ON=True)
+
+      This function computes the Z_nl^m Zernike moment and stores it in a dictionary if DICT_ON = True (default).
+
+      Note 1) Saving the moments in the dictionary is high memory consuming.
+
+      Note 2) Each moment is one of the orthonormal basis vector of the Zernike expansion.
+      Given a 3D function, f(x,y,z) defined in the unitary sphere, it can be decomposed in the
+      Zernike basis as:
+      f(x,y,z) = sum_nlm c_nlm Z_nlm
+
+      Note 3) Z_nl^m = (-1)^m conjugate(Z_nl^m)
+
+
+   .. py:method:: compute_3d_coefficient(f, n, l, m)
+
+      This function computes the Zernike coeffient associated to the Z_nlm moment as
+
+      c_nlm = int_(R<1) dxdydz F(x,y,z) * conjugate(Z_nlm)
+
+      Note that since we have voxelized the space, the integral becomes a sum over the voxels
+      divided by the number of voxels (the voxels inside the R = 1 sphere).
+
+
+   .. py:method:: bracket(z1, z2)
+
+      This function computes the braket as
+      c = < Z1 | Z2> = int dxdydz Z1 * conjugate(Z2)
+
+
+   .. py:method:: initiate_cube(n=128)
+
+      This function initializes the x,y,z and r meshes on the 1x1x1 cube centered in (0,0,0).
+
+
+   .. py:method:: from_unit_sphere_to_cube(img, n_l)
+
+      This function takes as input the linear array of voxel values (in the unitary sphere, r<1) and
+      return a Nl x Nl x Nl voxel grid.
+      Input:
+      - img, an 1d array.
+      - Nl, a scalar, the cube edge (Nl x Nl x Nl).
+      Return:
+      - data, a (Nl x Nl x Nl) matrix containg the voxelized image.
+
+
+   .. py:method:: from_cube_to_unit_sphere(data)
+
+      This function takes as input the Nl x Nl x Nl voxel grid and returns a linear array containing the values of the
+      voxels in the unitary sphere, r<1.
+      Input:
+      - data, a (Nl x Nl x Nl) matrix containing the voxelized image.
+      Return:
+      - img, an 1d array.
+
+
+   .. py:method:: compute_invariant(c_set, n_t)
+
+      This function computes the invariant for a dictionary containing all the coefficients.
+
+
+   .. py:method:: decomposition(fig, n_t)
+
+      This function decomposes a 3D image in the Zernike basis up to order N.
+      It returns the reconstructed image and the coefficient list (as a dictionary).
+
+
+   .. py:method:: plot3d(myobj_list, isosuface_vec, r_thres=0.95, solo_real=True)
+
+      This function plots the isosurfaces of the passed voxel matrixes.
+
+
+
+.. py:class:: Zernike2D(image_file)
+
+
+   This class performs the 2D decomposition of a figure in its Zernike descriptors
+
+   .. py:method:: circle_image(image)
+
+
+   .. py:method:: prepare_image(datafile)
+
+
+   .. py:method:: compute_dot(mat_a, mat_b)
+
+
+   .. py:method:: compute_coeff_nm(F, n, m)
+
+
+   .. py:method:: from_cartesian_to_polar_plane(x, y)
+
+
+   .. py:method:: r_nm(n, m, l_r)
+
+
+   .. py:method:: phi_m(theta, m)
+
+
+   .. py:method:: build_plane(n)
+
+
+   .. py:method:: count_moment(n)
+
+      This function computes the number of moment that an expansion to the n order will produce.
+
+
+   .. py:method:: compute_moment(n, m)
+
+
+   .. py:method:: zernike_reconstruction(order, plot=True)
+
+
+   .. py:method:: zernike_decomposition(order)
+
+
+

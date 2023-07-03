@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>zepyros.zernike &mdash; zepyros  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="prev" title="zepyros.surface" href="../surface/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            zepyros
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../advanced/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.advanced</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../common/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.common</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../surface/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.surface</span></code></a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.zernike</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">zepyros</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.zernike</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/zepyros/zernike/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-zepyros.zernike">
+<span id="zepyros-zernike"></span><h1><a class="reference internal" href="#module-zepyros.zernike" title="zepyros.zernike"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.zernike</span></code></a><a class="headerlink" href="#module-zepyros.zernike" title="Permalink to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.zernike.Zernike3D" title="zepyros.zernike.Zernike3D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Zernike3D</span></code></a></p></td>
+<td><p>This class performs the 3D decomposition of a (voxelized) shape in the Zernike</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#zepyros.zernike.Zernike2D" title="zepyros.zernike.Zernike2D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Zernike2D</span></code></a></p></td>
+<td><p>This class performs the 2D decomposition of a figure in its Zernike descriptors</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py class">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zepyros.zernike.</span></span><span class="sig-name descname"><span class="pre">Zernike3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_l</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D" title="Permalink to this definition"></a></dt>
+<dd><p>This class performs the 3D decomposition of a (voxelized) shape in the Zernike
+basis up to a given expansion order.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.prepare_zernike">
+<span class="sig-name descname"><span class="pre">prepare_zernike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.prepare_zernike"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.prepare_zernike" title="Permalink to this definition"></a></dt>
+<dd><p>This function initializes the quantities need to fastly compute zernike moments.
+It takes as input the voxel grid edge.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.prepare_image">
+<span class="sig-name descname"><span class="pre">prepare_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.prepare_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.prepare_image" title="Permalink to this definition"></a></dt>
+<dd><p>This function read a dx file and return a 3 x Nl linear array containing the value of each voxel.
+It also computes the Nl value assuming that the voxelization was performed on a Nl x Nl x Nl cube.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.epsilon">
+<span class="sig-name descname"><span class="pre">epsilon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.epsilon"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.epsilon" title="Permalink to this definition"></a></dt>
+<dd><p>This function computes the epsilon term of the Zernike moment, Z_nl^m = epsilon(l,m)*R(n,l)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.c_lm">
+<span class="sig-name descname"><span class="pre">c_lm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.c_lm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.c_lm" title="Permalink to this definition"></a></dt>
+<dd><p>This function computes one of the terms of epsilon(l,m)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.q_klv">
+<span class="sig-name descname"><span class="pre">q_klv</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">k</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">v</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.q_klv"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.q_klv" title="Permalink to this definition"></a></dt>
+<dd><p>This function computes one of the  terms of R(n,l).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.r_nl">
+<span class="sig-name descname"><span class="pre">r_nl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.r_nl"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.r_nl" title="Permalink to this definition"></a></dt>
+<dd><p>This function computes the R term of the Zernike moment, Z_nl^m = epsilon(l,m)*R(n,l)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.compute_3d_moment">
+<span class="sig-name descname"><span class="pre">compute_3d_moment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">DICT_ON</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.compute_3d_moment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.compute_3d_moment" title="Permalink to this definition"></a></dt>
+<dd><p>This function computes the Z_nl^m Zernike moment and stores it in a dictionary if DICT_ON = True (default).</p>
+<p>Note 1) Saving the moments in the dictionary is high memory consuming.</p>
+<p>Note 2) Each moment is one of the orthonormal basis vector of the Zernike expansion.
+Given a 3D function, f(x,y,z) defined in the unitary sphere, it can be decomposed in the
+Zernike basis as:
+f(x,y,z) = sum_nlm c_nlm Z_nlm</p>
+<p>Note 3) Z_nl^m = (-1)^m conjugate(Z_nl^m)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.compute_3d_coefficient">
+<span class="sig-name descname"><span class="pre">compute_3d_coefficient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.compute_3d_coefficient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.compute_3d_coefficient" title="Permalink to this definition"></a></dt>
+<dd><p>This function computes the Zernike coeffient associated to the Z_nlm moment as</p>
+<p>c_nlm = int_(R&lt;1) dxdydz F(x,y,z) * conjugate(Z_nlm)</p>
+<p>Note that since we have voxelized the space, the integral becomes a sum over the voxels
+divided by the number of voxels (the voxels inside the R = 1 sphere).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.bracket">
+<span class="sig-name descname"><span class="pre">bracket</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z2</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.bracket"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.bracket" title="Permalink to this definition"></a></dt>
+<dd><p>This function computes the braket as
+c = &lt; Z1 | Z2&gt; = int dxdydz Z1 * conjugate(Z2)</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.initiate_cube">
+<span class="sig-name descname"><span class="pre">initiate_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">128</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.initiate_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.initiate_cube" title="Permalink to this definition"></a></dt>
+<dd><p>This function initializes the x,y,z and r meshes on the 1x1x1 cube centered in (0,0,0).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.from_unit_sphere_to_cube">
+<span class="sig-name descname"><span class="pre">from_unit_sphere_to_cube</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">img</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_l</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.from_unit_sphere_to_cube"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.from_unit_sphere_to_cube" title="Permalink to this definition"></a></dt>
+<dd><p>This function takes as input the linear array of voxel values (in the unitary sphere, r&lt;1) and
+return a Nl x Nl x Nl voxel grid.
+Input:
+- img, an 1d array.
+- Nl, a scalar, the cube edge (Nl x Nl x Nl).
+Return:
+- data, a (Nl x Nl x Nl) matrix containg the voxelized image.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.from_cube_to_unit_sphere">
+<span class="sig-name descname"><span class="pre">from_cube_to_unit_sphere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.from_cube_to_unit_sphere"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.from_cube_to_unit_sphere" title="Permalink to this definition"></a></dt>
+<dd><p>This function takes as input the Nl x Nl x Nl voxel grid and returns a linear array containing the values of the
+voxels in the unitary sphere, r&lt;1.
+Input:
+- data, a (Nl x Nl x Nl) matrix containing the voxelized image.
+Return:
+- img, an 1d array.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.compute_invariant">
+<span class="sig-name descname"><span class="pre">compute_invariant</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">c_set</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.compute_invariant"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.compute_invariant" title="Permalink to this definition"></a></dt>
+<dd><p>This function computes the invariant for a dictionary containing all the coefficients.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.decomposition">
+<span class="sig-name descname"><span class="pre">decomposition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fig</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_t</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.decomposition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.decomposition" title="Permalink to this definition"></a></dt>
+<dd><p>This function decomposes a 3D image in the Zernike basis up to order N.
+It returns the reconstructed image and the coefficient list (as a dictionary).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike3D.plot3d">
+<span class="sig-name descname"><span class="pre">plot3d</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">myobj_list</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isosuface_vec</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r_thres</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solo_real</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike3D.plot3d"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike3D.plot3d" title="Permalink to this definition"></a></dt>
+<dd><p>This function plots the isosurfaces of the passed voxel matrixes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zepyros.zernike.</span></span><span class="sig-name descname"><span class="pre">Zernike2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image_file</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D" title="Permalink to this definition"></a></dt>
+<dd><p>This class performs the 2D decomposition of a figure in its Zernike descriptors</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.circle_image">
+<span class="sig-name descname"><span class="pre">circle_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">image</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.circle_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.circle_image" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.prepare_image">
+<span class="sig-name descname"><span class="pre">prepare_image</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">datafile</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.prepare_image"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.prepare_image" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.compute_dot">
+<span class="sig-name descname"><span class="pre">compute_dot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mat_a</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mat_b</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.compute_dot"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.compute_dot" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.compute_coeff_nm">
+<span class="sig-name descname"><span class="pre">compute_coeff_nm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">F</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.compute_coeff_nm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.compute_coeff_nm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.from_cartesian_to_polar_plane">
+<span class="sig-name descname"><span class="pre">from_cartesian_to_polar_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.from_cartesian_to_polar_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.from_cartesian_to_polar_plane" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.r_nm">
+<span class="sig-name descname"><span class="pre">r_nm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">l_r</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.r_nm"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.r_nm" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.phi_m">
+<span class="sig-name descname"><span class="pre">phi_m</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">theta</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.phi_m"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.phi_m" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.build_plane">
+<span class="sig-name descname"><span class="pre">build_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.build_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.build_plane" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.count_moment">
+<span class="sig-name descname"><span class="pre">count_moment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.count_moment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.count_moment" title="Permalink to this definition"></a></dt>
+<dd><p>This function computes the number of moment that an expansion to the n order will produce.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.compute_moment">
+<span class="sig-name descname"><span class="pre">compute_moment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">m</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.compute_moment"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.compute_moment" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.zernike_reconstruction">
+<span class="sig-name descname"><span class="pre">zernike_reconstruction</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.zernike_reconstruction"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.zernike_reconstruction" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.zernike.Zernike2D.zernike_decomposition">
+<span class="sig-name descname"><span class="pre">zernike_decomposition</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">order</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/zernike.html#Zernike2D.zernike_decomposition"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.zernike.Zernike2D.zernike_decomposition" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../surface/index.html" class="btn btn-neutral float-left" title="zepyros.surface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mattia Miotto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

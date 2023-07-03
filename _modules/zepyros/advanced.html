@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>zepyros.advanced &mdash; zepyros  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            zepyros
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">zepyros</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">zepyros.advanced</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for zepyros.advanced</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.ticker</span> <span class="k">as</span> <span class="nn">m_ticker</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">zepyros.surface</span> <span class="k">as</span> <span class="nn">sf</span>
+<span class="kn">import</span> <span class="nn">zepyros.zernike</span> <span class="k">as</span> <span class="nn">zf</span>
+<span class="n">mpl</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;Agg&#39;</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="get_zernike"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.advanced.get_zernike">[docs]</a><span class="k">def</span> <span class="nf">get_zernike</span><span class="p">(</span><span class="n">surf</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">ndx</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">verso</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_pixel</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Identifies a patch and calculates Zernike polynomials that characterize it</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    `surf`: ndarray</span>
+<span class="sd">        surface of the whole system with 6 columns: coordinate ``x``, ``y``, ``z`` points</span>
+<span class="sd">        and ``nx``, ``ny`` and ``nz`` unit vectors</span>
+<span class="sd">    `radius`: float</span>
+<span class="sd">        the radius of the patch</span>
+<span class="sd">    `ndx`: int</span>
+<span class="sd">        index of the point selected as center of the patch</span>
+<span class="sd">    `order`: int</span>
+<span class="sd">        the expansion order of polynomials</span>
+<span class="sd">    `verso`: int</span>
+<span class="sd">        the direction of the patch with respect to its axis:</span>
+<span class="sd">        1 for the positive direction, -1 for the negative direction (default: ``1``)</span>
+<span class="sd">    `n_pixel`: int</span>
+<span class="sd">        number of pixels per side with which the patch will be reconstructed (default: ``25``)</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    `tuple`</span>
+<span class="sd">        - polynomial coefficients (`ndarray`)</span>
+<span class="sd">        - Zernike 2d disk data (`ndarray`)</span>
+<span class="sd">        - the indices of the surface points belonging to the patch (`array`)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: passi già la superficie come deve essere</span>
+    <span class="c1"># lag = len(surf[&quot;x&quot;])</span>
+    <span class="c1"># surf_z = np.zeros((lag, 6))</span>
+    <span class="c1"># surf_z[:, :] = surf[[&quot;x&quot;, &quot;y&quot;, &quot;z&quot;, &quot;nx&quot;, &quot;ny&quot;, &quot;nz&quot;]]</span>
+
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">surf</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+        <span class="n">surf</span> <span class="o">=</span> <span class="n">surf</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">surf</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">):</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s1">&#39;`surf` must be pandas dataframe or numpy ndarray&#39;</span><span class="p">)</span>
+
+    <span class="n">surf_obj</span> <span class="o">=</span> <span class="n">sf</span><span class="o">.</span><span class="n">Surface</span><span class="p">(</span><span class="n">surf</span><span class="p">[:,</span> <span class="p">:],</span> <span class="n">patch_num</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">r0</span><span class="o">=</span><span class="nb">float</span><span class="p">(</span><span class="n">radius</span><span class="p">),</span> <span class="n">theta_max</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+    <span class="n">patch</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">build_patch</span><span class="p">(</span><span class="n">point_ndx</span><span class="o">=</span><span class="n">ndx</span><span class="p">,</span> <span class="n">d_min</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span>
+    <span class="n">surf_obj</span><span class="o">.</span><span class="n">real_br</span> <span class="o">=</span> <span class="n">mask</span>
+
+    <span class="n">rot_patch</span><span class="p">,</span> <span class="n">rot_ag_patch_nv</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">patch_reorient</span><span class="p">(</span><span class="n">patch</span><span class="p">,</span> <span class="n">verso</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">find_origin</span><span class="p">(</span><span class="n">rot_patch</span><span class="p">)</span>
+    <span class="n">plane</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">dist_plane</span><span class="p">,</span> <span class="n">thetas</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">create_plane</span><span class="p">(</span><span class="n">patch</span><span class="o">=</span><span class="n">rot_patch</span><span class="p">,</span> <span class="n">z_c</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">n_p</span><span class="o">=</span><span class="n">n_pixel</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">rot_patch</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">4</span><span class="p">:</span>
+        <span class="n">new_plane_re</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">fill_gap_everywhere</span><span class="p">(</span><span class="n">plane_</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">real</span><span class="p">(</span><span class="n">plane</span><span class="p">))</span>
+        <span class="n">new_plane_im</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">fill_gap_everywhere</span><span class="p">(</span><span class="n">plane_</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">imag</span><span class="p">(</span><span class="n">plane</span><span class="p">))</span>
+        <span class="n">new_plane_re_</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">enlarge_pixels</span><span class="p">(</span><span class="n">new_plane_re</span><span class="p">)</span>
+        <span class="n">new_plane_im_</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">enlarge_pixels</span><span class="p">(</span><span class="n">new_plane_im</span><span class="p">)</span>
+        <span class="n">new_plane_</span> <span class="o">=</span> <span class="n">new_plane_re_</span> <span class="o">+</span> <span class="mi">1</span><span class="n">j</span> <span class="o">*</span> <span class="n">new_plane_im_</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">new_plane_im_</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">new_plane</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">fill_gap_everywhere</span><span class="p">(</span><span class="n">plane_</span><span class="o">=</span><span class="n">plane</span><span class="p">)</span>
+        <span class="n">new_plane_</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">enlarge_pixels</span><span class="p">(</span><span class="n">new_plane</span><span class="p">)</span>     <span class="c1"># enlarging plane</span>
+
+    <span class="c1"># try:</span>
+    <span class="c1">#     zernike_env.img = new_plane_</span>
+    <span class="c1"># except:</span>
+    <span class="c1">#     zernike_env = zf.Zernike2D(new_plane_)</span>
+
+    <span class="n">zernike_env</span> <span class="o">=</span> <span class="n">zf</span><span class="o">.</span><span class="n">Zernike2D</span><span class="p">(</span><span class="n">new_plane_</span><span class="p">)</span>
+    <span class="n">br_coeff</span> <span class="o">=</span> <span class="n">zernike_env</span><span class="o">.</span><span class="n">zernike_decomposition</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">order</span><span class="p">))</span>
+    <span class="n">disk_data</span> <span class="o">=</span> <span class="n">zernike_env</span><span class="o">.</span><span class="n">img</span>
+    <span class="n">reduced_disk</span> <span class="o">=</span> <span class="n">disk_data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">16</span><span class="p">))]</span>
+
+    <span class="n">df_disk</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reduced_disk</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
+    <span class="n">df_disk</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;column&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">br_coeff</span><span class="p">),</span> <span class="n">df_disk</span><span class="p">,</span> <span class="n">mask</span></div>
+
+
+<div class="viewcode-block" id="plot_disk"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.advanced.plot_disk">[docs]</a><span class="k">def</span> <span class="nf">plot_disk</span><span class="p">(</span><span class="n">df_disk</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots 2d Zernike disk</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    `disk_data`: ndarray</span>
+<span class="sd">        the disk data obtained from ``get_zernike`` function</span>
+<span class="sd">    `save_path`: string</span>
+<span class="sd">        optional; the path where to save the disk image</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    `matplotlib.figure.Figure`</span>
+<span class="sd">        the disk image as object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># reduced_disk = disk_data[np.ix_(range(0, 400, 16), range(0, 400, 16))]</span>
+    <span class="c1">#</span>
+    <span class="c1"># df_disk = pd.DataFrame(reduced_disk).reset_index().melt(&#39;index&#39;)</span>
+    <span class="c1"># df_disk.columns = [&#39;row&#39;, &#39;column&#39;, &#39;value&#39;]</span>
+    <span class="c1">#</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">df_disk</span><span class="p">[</span><span class="s2">&quot;column&quot;</span><span class="p">]</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">df_disk</span><span class="p">[</span><span class="s2">&quot;row&quot;</span><span class="p">]</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">df_disk</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span>
+
+    <span class="n">xi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">501</span><span class="p">)</span>  <span class="c1"># [i for i in range(0, 25)]</span>
+    <span class="n">yi</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">501</span><span class="p">)</span>  <span class="c1"># [i for i in range(0, 25)]</span>
+    <span class="n">zi</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">interpolate</span><span class="o">.</span><span class="n">griddata</span><span class="p">((</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">z</span><span class="p">,</span> <span class="p">(</span><span class="n">xi</span><span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="p">:],</span> <span class="n">yi</span><span class="p">[:,</span> <span class="kc">None</span><span class="p">]),</span> <span class="n">method</span><span class="o">=</span><span class="s1">&#39;cubic&#39;</span><span class="p">)</span>
+
+    <span class="n">xy_center</span> <span class="o">=</span> <span class="p">[</span><span class="mi">12</span><span class="p">,</span> <span class="mi">12</span><span class="p">]</span>
+    <span class="n">radius</span> <span class="o">=</span> <span class="mi">11</span>
+
+    <span class="c1"># set points &gt; radius to not-a-number. They will not be plotted.</span>
+    <span class="c1"># the dr/2 makes the edges a bit smoother</span>
+    <span class="n">dr</span> <span class="o">=</span> <span class="n">xi</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">xi</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">xi</span><span class="p">)):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">yi</span><span class="p">)):</span>
+            <span class="n">r</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">xi</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">xy_center</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">yi</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">xy_center</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">r</span> <span class="o">-</span> <span class="n">dr</span> <span class="o">/</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">radius</span><span class="p">:</span>
+                <span class="n">zi</span><span class="p">[</span><span class="n">j</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;nan&quot;</span>
+
+    <span class="c1"># make figure</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+
+    <span class="c1"># set aspect = 1 to make it a circle</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># cs = ax.contourf(xi, yi, zi, 1000, cmap=&#39;viridis&#39;, zorder=1)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">zi</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">circle</span> <span class="o">=</span> <span class="n">mpl</span><span class="o">.</span><span class="n">patches</span><span class="o">.</span><span class="n">Circle</span><span class="p">(</span>
+        <span class="n">xy</span><span class="o">=</span><span class="n">xy_center</span><span class="p">,</span>
+        <span class="n">radius</span><span class="o">=</span><span class="n">radius</span><span class="p">,</span>
+        <span class="n">edgecolor</span><span class="o">=</span><span class="s2">&quot;steelblue&quot;</span><span class="p">,</span>
+        <span class="n">facecolor</span><span class="o">=</span><span class="s2">&quot;none&quot;</span><span class="p">,</span>
+        <span class="n">linewidth</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">circle</span><span class="p">)</span>
+
+    <span class="c1"># make the axis invisible</span>
+    <span class="k">for</span> <span class="n">loc</span><span class="p">,</span> <span class="n">spine</span> <span class="ow">in</span> <span class="n">ax</span><span class="o">.</span><span class="n">spines</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="n">spine</span><span class="o">.</span><span class="n">set_linewidth</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># remove the ticks</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([])</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">([])</span>
+
+    <span class="n">pl_disk</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">pl_disk</span></div>
+
+
+<div class="viewcode-block" id="plot_coeff"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.advanced.plot_coeff">[docs]</a><span class="k">def</span> <span class="nf">plot_coeff</span><span class="p">(</span><span class="n">coeff</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Plots the zernike invariants, i.e. the absolute value of the real part</span>
+<span class="sd">    of the coefficients of the polynomials</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    ``coeff``: ndarray</span>
+<span class="sd">        the zernike invariants obtained for example by ``get_zernike`` function</span>
+<span class="sd">    ``save_path``: string</span>
+<span class="sd">        optional; the path where to save the disk image</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    `matplotlib.figure.Figure`</span>
+<span class="sd">        the zernike invariants image as object</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coeff</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">))]</span>
+
+    <span class="n">df_coeff</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
+        <span class="p">{</span>
+            <span class="s1">&#39;x&#39;</span><span class="p">:</span> <span class="n">x</span><span class="p">,</span>
+            <span class="s1">&#39;y&#39;</span><span class="p">:</span> <span class="n">coeff</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">df_coeff</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#36648B&quot;</span><span class="p">)</span>
+
+    <span class="n">x_label</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xticks</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">y_label</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_yticks</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="n">yrest</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_label</span><span class="p">]</span>
+
+    <span class="n">ax</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">m_ticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">x_label</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">set_major_locator</span><span class="p">(</span><span class="n">m_ticker</span><span class="o">.</span><span class="n">FixedLocator</span><span class="p">(</span><span class="n">y_label</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">x_label</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="nb">sum</span><span class="p">([</span><span class="n">i</span> <span class="o">!=</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">yrest</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="nb">str</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_label</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_yticklabels</span><span class="p">([</span><span class="nb">int</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">y_label</span><span class="p">],</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Index&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Zernike invariants&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">18</span><span class="p">)</span>
+
+    <span class="n">pl_coeff</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_figure</span><span class="p">()</span>
+
+    <span class="k">if</span> <span class="n">save_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_path</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;white&#39;</span><span class="p">,</span> <span class="n">transparent</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">return</span> <span class="n">pl_coeff</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mattia Miotto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

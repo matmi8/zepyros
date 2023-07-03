@@ -1,0 +1,152 @@
+:py:mod:`zepyros.common`
+========================
+
+.. py:module:: zepyros.common
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   zepyros.common.rotate_matrix
+   zepyros.common.rotate_patch
+   zepyros.common.flip_matrix
+   zepyros.common.isolate_surfaces
+   zepyros.common.contact_points
+   zepyros.common.build_cone
+   zepyros.common.concatenate_fig_plots
+   zepyros.common.log10_factorial
+
+
+
+.. py:function:: rotate_matrix(cos, sin, axis)
+
+   Given sine and cosine of the angle and the axis of rotation returns
+   the rotation matrix
+
+   :param `cos`: the cosine of the angle
+   :type `cos`: real
+   :param `sin`: the sine of the angle
+   :type `sin`: real
+   :param `axis`: the axis of rotation: 0 for x, 1 for y and 2 for z
+   :type `axis`: integer
+
+   :returns: the rotation matrix
+   :rtype: matrix
+
+
+.. py:function:: rotate_patch(patch, v_start, v_z, pin)
+
+   Rotates a set of points by an angle defined by a given unit vector
+   and the z axis with a positive or negative direction
+
+   :param `patch`: array of points that make up the portion of the surface to orient.
+                   If the array contains more than three columns, only the first three will be selected
+   :type `patch`: ndarray
+   :param `v_start`: array of shape (1, 3) which indicates the initial unit vector to orient
+                     and make coincide with the z axis
+   :type `v_start`: ndarray
+   :param `v_z`: array of shape (1, 3) indicating the positive (0, 0, 1)
+                 or negative (0, 0, -1) oriented z-axis unit vector
+   :type `v_z`: ndarray
+   :param `pin`: array of shape (1, 3) indicating the origin of ``v_start``
+   :type `pin`: ndarray
+
+   :returns: # TODO: add return docs
+   :rtype: `tuple`
+
+
+.. py:function:: flip_matrix(mat, axis)
+
+   Flips a matrix based on its axis
+
+   :param `mat`: the matrix to flip
+   :type `mat`: ndarray
+   :param `axis`: the axis about which to flip the ndarray (0 for x, 1 for y)
+   :type `axis`: int
+
+   :returns: the flipped matrix with respect the axis
+   :rtype: matrix
+
+   .. rubric:: Examples
+
+   >>> mat = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+   >>> mat
+   array([[1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9]])
+   >>> flip_matrix(mat, 0)
+   array([[7, 8, 9],
+      [4, 5, 6],
+      [1, 2, 3]])
+   >>> flip_matrix(mat, 1)
+   array([[3, 2, 1],
+      [6, 5, 4],
+      [9, 8, 7]])
+
+
+.. py:function:: isolate_surfaces(surface, min_d=1.0)
+
+   Given a surface of x, y, z points, form groups of points that are
+   at a distance less than a given threshold
+
+   :param `surface`: array of points where each row is a point in space.
+                     If the number of columns is greater than three,
+                     only the first three columns will be used
+   :type `surface`: ndarray
+   :param `min_d`: the minimum distance at which two points must be located
+                   to be grouped in the same cluster.
+                   The unit of measurement depends on that of the points in `surface`
+   :type `min_d`: float
+
+   :returns: list of integer (starts from 2), where each integer represents
+             the label of a specific group. The i-th element indicates the group
+             to which the i-th point of the initial surface belongs
+   :rtype: array
+
+   .. rubric:: Examples
+
+   >>> mat = np.array([[4.5, 4.5, 4.5], [1.5, 1.5, 1.5], [2., 1., 1.5], [5., 5., 5.], [1., 1., 1.]])
+   >>> mat
+   array([[4.5, 4.5, 4.5],
+          [1.5, 1.5, 1.5],
+          [2. , 1. , 1.5],
+          [5. , 5. , 5. ],
+          [1. , 1. , 1. ]])
+   >>> isolate_surfaces(mat, 1)
+   array([2, 3, 3, 2, 3], dtype=int8)
+
+
+.. py:function:: contact_points(list_1, list_2, thresh)
+
+   This function finds the groups of point of list1 and list2 that have a distance lesser that thresh
+   from at least one point of the other list.
+
+
+.. py:function:: build_cone(z_max, n_disk)
+
+
+.. py:function:: concatenate_fig_plots(list_)
+
+
+.. py:function:: log10_factorial(n)
+
+   Compute ``log(n!)`` with the base 10 logarithm
+
+   :param `n`: Input values. If n < 0, the return value is 0
+   :type `n`: int
+
+   :returns: Factorial of log10(n): ``log(n!) = log(n) + log(n-1) + ... + log(1)``
+   :rtype: real
+
+   .. rubric:: Examples
+
+   >>> log10_factorial(10)
+   6.559763032876794
+
+

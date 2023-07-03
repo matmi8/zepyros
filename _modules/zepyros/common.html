@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>zepyros.common &mdash; zepyros  documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            zepyros
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../autoapi/index.html">API Reference</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">zepyros</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">zepyros.common</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for zepyros.common</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sys</span>
+
+
+<div class="viewcode-block" id="rotate_matrix"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.common.rotate_matrix">[docs]</a><span class="k">def</span> <span class="nf">rotate_matrix</span><span class="p">(</span><span class="n">cos</span><span class="p">,</span> <span class="n">sin</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given sine and cosine of the angle and the axis of rotation returns</span>
+<span class="sd">    the rotation matrix</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    `cos`: real</span>
+<span class="sd">        the cosine of the angle</span>
+<span class="sd">    `sin`: real</span>
+<span class="sd">        the sine of the angle</span>
+<span class="sd">    `axis`: integer</span>
+<span class="sd">        the axis of rotation: 0 for x, 1 for y and 2 for z</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    matrix</span>
+<span class="sd">        the rotation matrix</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">rotated_matrix</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sin</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sin</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span>
+    <span class="k">if</span> <span class="n">axis</span> <span class="o">==</span> <span class="mi">2</span><span class="p">:</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sin</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">sin</span>
+        <span class="n">rotated_matrix</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">cos</span>
+    <span class="k">return</span> <span class="n">rotated_matrix</span></div>
+
+
+<div class="viewcode-block" id="rotate_patch"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.common.rotate_patch">[docs]</a><span class="k">def</span> <span class="nf">rotate_patch</span><span class="p">(</span><span class="n">patch</span><span class="p">,</span> <span class="n">v_start</span><span class="p">,</span> <span class="n">v_z</span><span class="p">,</span> <span class="n">pin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rotates a set of points by an angle defined by a given unit vector</span>
+<span class="sd">    and the z axis with a positive or negative direction</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    `patch`: ndarray</span>
+<span class="sd">        array of points that make up the portion of the surface to orient.</span>
+<span class="sd">        If the array contains more than three columns, only the first three will be selected</span>
+<span class="sd">    `v_start`: ndarray</span>
+<span class="sd">        array of shape (1, 3) which indicates the initial unit vector to orient</span>
+<span class="sd">        and make coincide with the z axis</span>
+<span class="sd">    `v_z`: ndarray</span>
+<span class="sd">        array of shape (1, 3) indicating the positive (0, 0, 1)</span>
+<span class="sd">        or negative (0, 0, -1) oriented z-axis unit vector</span>
+<span class="sd">    `pin`: ndarray</span>
+<span class="sd">        array of shape (1, 3) indicating the origin of ``v_start``</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    `tuple`</span>
+<span class="sd">        # TODO: add return docs</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">xy</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">yz</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="c1"># xz = True   # unused</span>
+
+    <span class="n">_ESP_</span> <span class="o">=</span> <span class="mf">1e-10</span>
+
+    <span class="n">patch_trans</span> <span class="o">=</span> <span class="n">patch</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span> <span class="o">-</span> <span class="n">pin</span>
+
+    <span class="n">n_points</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">patch_trans</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="c1"># defining rotating vectors</span>
+    <span class="n">r_z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v_z</span><span class="p">])</span>
+    <span class="n">r_vn</span> <span class="o">=</span> <span class="n">v_start</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>  <span class="c1"># np.mean(normal_v, axis=0) #nter_atom_pos[1, :]</span>
+
+    <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r_z</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r_vn</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">r_z</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r_z</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">r_vn</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r_vn</span><span class="p">))))</span>
+
+    <span class="n">r_vn1</span> <span class="o">=</span> <span class="n">r_vn</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="k">while</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="n">_ESP_</span><span class="p">:</span>
+
+        <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r_vn1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">r_vn1</span><span class="p">[</span><span class="mi">1</span><span class="p">]])</span>
+        <span class="c1"># r2 = np.array([r_z[0], r_z[1]])   # unused</span>
+        <span class="n">r1</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r1</span><span class="p">))</span>
+
+        <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">r1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r1</span><span class="p">))</span>  <span class="c1"># (r1[0]*r2[0] + r1[1]*r2[1])/r1.dot(r1)</span>
+        <span class="n">sin_theta</span> <span class="o">=</span> <span class="n">r1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r1</span><span class="p">))</span>  <span class="c1"># (r1[0]*r2[1] - r1[1]*r2[0])/r1.dot(r1)</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">rotate_matrix</span><span class="p">(</span><span class="n">cos_theta</span><span class="p">,</span> <span class="n">sin_theta</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">xy</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_points</span><span class="p">):</span>
+                <span class="n">patch_trans</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">patch_trans</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+            <span class="n">r_vn1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">r_vn1</span><span class="p">)</span>
+
+        <span class="c1"># y-z plane</span>
+        <span class="n">r1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">r_vn1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">r_vn1</span><span class="p">[</span><span class="mi">2</span><span class="p">]])</span>
+        <span class="c1"># r2 = np.array([r_z[1], r_z[2]])   # unused</span>
+        <span class="n">r1</span> <span class="o">/=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">r1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r1</span><span class="p">))</span>
+
+        <span class="k">if</span> <span class="n">v_z</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">cos_theta</span> <span class="o">=</span> <span class="n">r1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">sin_theta</span> <span class="o">=</span> <span class="n">r1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">cos_theta</span> <span class="o">=</span> <span class="o">-</span><span class="n">r1</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+            <span class="n">sin_theta</span> <span class="o">=</span> <span class="o">-</span><span class="n">r1</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="n">r</span> <span class="o">=</span> <span class="n">rotate_matrix</span><span class="p">(</span><span class="n">cos_theta</span><span class="p">,</span> <span class="n">sin_theta</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">yz</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_points</span><span class="p">):</span>
+                <span class="n">patch_trans</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">patch_trans</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:])</span>
+            <span class="n">r_vn1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">r_vn1</span><span class="p">)</span>
+
+        <span class="n">p</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">r_z</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r_vn1</span><span class="p">)</span> <span class="o">/</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">((</span><span class="n">r_z</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r_z</span><span class="p">))</span> <span class="o">*</span> <span class="p">(</span><span class="n">r_vn1</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">r_vn1</span><span class="p">))))</span>
+    <span class="k">return</span> <span class="n">r_vn1</span><span class="p">,</span> <span class="n">patch_trans</span></div>
+
+
+<div class="viewcode-block" id="flip_matrix"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.common.flip_matrix">[docs]</a><span class="k">def</span> <span class="nf">flip_matrix</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="n">axis</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Flips a matrix based on its axis</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    `mat`: ndarray</span>
+<span class="sd">        the matrix to flip</span>
+<span class="sd">    `axis`: int</span>
+<span class="sd">        the axis about which to flip the ndarray (0 for x, 1 for y)</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    matrix</span>
+<span class="sd">        the flipped matrix with respect the axis</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; mat = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])</span>
+<span class="sd">    &gt;&gt;&gt; mat</span>
+<span class="sd">    array([[1, 2, 3],</span>
+<span class="sd">       [4, 5, 6],</span>
+<span class="sd">       [7, 8, 9]])</span>
+<span class="sd">    &gt;&gt;&gt; flip_matrix(mat, 0)</span>
+<span class="sd">    array([[7, 8, 9],</span>
+<span class="sd">       [4, 5, 6],</span>
+<span class="sd">       [1, 2, 3]])</span>
+<span class="sd">    &gt;&gt;&gt; flip_matrix(mat, 1)</span>
+<span class="sd">    array([[3, 2, 1],</span>
+<span class="sd">       [6, 5, 4],</span>
+<span class="sd">       [9, 8, 7]])</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">mat</span><span class="p">,</span> <span class="s1">&#39;ndim&#39;</span><span class="p">):</span>
+        <span class="n">m</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+    <span class="n">indexer</span> <span class="o">=</span> <span class="p">[</span><span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">)]</span> <span class="o">*</span> <span class="n">mat</span><span class="o">.</span><span class="n">ndim</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">indexer</span><span class="p">[</span><span class="n">axis</span><span class="p">]</span> <span class="o">=</span> <span class="nb">slice</span><span class="p">(</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;axis=</span><span class="si">%i</span><span class="s2"> is invalid for the </span><span class="si">%i</span><span class="s2">-dimensional input array&quot;</span>
+                         <span class="o">%</span> <span class="p">(</span><span class="n">axis</span><span class="p">,</span> <span class="n">mat</span><span class="o">.</span><span class="n">ndim</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">mat</span><span class="p">[</span><span class="nb">tuple</span><span class="p">(</span><span class="n">indexer</span><span class="p">)]</span></div>
+
+
+<div class="viewcode-block" id="isolate_surfaces"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.common.isolate_surfaces">[docs]</a><span class="k">def</span> <span class="nf">isolate_surfaces</span><span class="p">(</span><span class="n">surface</span><span class="p">,</span> <span class="n">min_d</span><span class="o">=</span><span class="mf">1.</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given a surface of x, y, z points, form groups of points that are</span>
+<span class="sd">    at a distance less than a given threshold</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    `surface`: ndarray</span>
+<span class="sd">        array of points where each row is a point in space.</span>
+<span class="sd">        If the number of columns is greater than three,</span>
+<span class="sd">        only the first three columns will be used</span>
+<span class="sd">    `min_d`: float</span>
+<span class="sd">        the minimum distance at which two points must be located</span>
+<span class="sd">        to be grouped in the same cluster.</span>
+<span class="sd">        The unit of measurement depends on that of the points in `surface`</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    array</span>
+<span class="sd">        list of integer (starts from 2), where each integer represents</span>
+<span class="sd">        the label of a specific group. The i-th element indicates the group</span>
+<span class="sd">        to which the i-th point of the initial surface belongs</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; mat = np.array([[4.5, 4.5, 4.5], [1.5, 1.5, 1.5], [2., 1., 1.5], [5., 5., 5.], [1., 1., 1.]])</span>
+<span class="sd">    &gt;&gt;&gt; mat</span>
+<span class="sd">    array([[4.5, 4.5, 4.5],</span>
+<span class="sd">           [1.5, 1.5, 1.5],</span>
+<span class="sd">           [2. , 1. , 1.5],</span>
+<span class="sd">           [5. , 5. , 5. ],</span>
+<span class="sd">           [1. , 1. , 1. ]])</span>
+<span class="sd">    &gt;&gt;&gt; isolate_surfaces(mat, 1)</span>
+<span class="sd">    array([2, 3, 3, 2, 3], dtype=int8)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">min_d2</span> <span class="o">=</span> <span class="n">min_d</span> <span class="o">**</span> <span class="mi">2</span>  <span class="c1"># squaring distance to avoid sqrt</span>
+    <span class="n">l</span><span class="p">,</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">surface</span><span class="p">)</span>  <span class="c1"># computing number of surface points</span>
+
+    <span class="c1"># initializing label vectors</span>
+    <span class="n">surf_label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+    <span class="n">surf_tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">l</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">int8</span><span class="p">)</span>
+
+    <span class="n">lab</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># starting from label = 2</span>
+    <span class="n">n_left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">surf_tmp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># computing number of points without label</span>
+
+    <span class="c1"># starting iterating over different surfaces</span>
+    <span class="k">while</span> <span class="n">n_left</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">pos__</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">surf_tmp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1"># seeding: first unlabeled point takes lab label</span>
+        <span class="n">surf_label</span><span class="p">[</span><span class="n">pos__</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">lab</span>
+        <span class="n">surf_tmp</span><span class="p">[</span><span class="n">pos__</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">lab</span>
+
+        <span class="c1"># iterating to find points belonging to the same surface</span>
+        <span class="k">while</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">pos_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">surf_tmp</span> <span class="o">==</span> <span class="n">lab</span><span class="p">)</span>
+            <span class="c1"># creating mask for points still to be processed</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">surf_tmp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">surf_tmp</span> <span class="o">!=</span> <span class="n">lab</span><span class="p">)</span>
+
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">pos_s</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+                <span class="c1"># computing distances between points and the i-th point</span>
+                <span class="n">d</span> <span class="o">=</span> <span class="p">(</span><span class="n">surface</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">surface</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">surface</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">surface</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span>
+                            <span class="n">surface</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">surface</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+
+                <span class="n">m_np</span> <span class="o">=</span> <span class="n">d</span> <span class="o">&lt;</span> <span class="n">min_d2</span>  <span class="c1"># m_np: mask near points</span>
+                <span class="n">surf_tmp</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>  <span class="c1"># removing processed point from system</span>
+                <span class="n">m_proc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">m_np</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>  <span class="c1"># m_proc: mask for point still to be processed</span>
+
+                <span class="n">tot_to_proc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">m_proc</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="n">tot_to_proc</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                    <span class="n">surf_label</span><span class="p">[</span><span class="n">m_proc</span><span class="p">]</span> <span class="o">=</span> <span class="n">lab</span>
+                    <span class="n">surf_tmp</span><span class="p">[</span><span class="n">m_proc</span><span class="p">]</span> <span class="o">=</span> <span class="n">lab</span>
+                    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">surf_tmp</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">surf_tmp</span> <span class="o">!=</span> <span class="n">lab</span><span class="p">)</span>
+
+        <span class="n">lab</span> <span class="o">+=</span> <span class="mi">1</span>  <span class="c1"># creating a new label</span>
+        <span class="n">n_left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">surf_tmp</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>  <span class="c1"># looking for how many points still to be processed</span>
+
+    <span class="k">return</span> <span class="n">surf_label</span></div>
+
+
+<span class="k">def</span> <span class="nf">_find_border</span><span class="p">(</span><span class="n">new_plane_ab</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function finds the border of a figure in the plane...</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: add documentation. DEPRECATED</span>
+    <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">new_plane_ab</span><span class="p">)</span>
+    <span class="n">p_h</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+    <span class="n">p_v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">))</span>
+
+    <span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">a</span><span class="p">):</span>
+
+        <span class="c1"># horizontal</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">new_plane_ab</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span>
+        <span class="n">lr</span> <span class="o">=</span> <span class="n">tmp</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">[</span><span class="n">lr</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">pos_1</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">lr</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">pos_2</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">lr</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">p_h</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="n">pos_1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">p_h</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">pos_2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p_h</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span>
+
+        <span class="c1"># vertical</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">new_plane_ab</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span>
+        <span class="n">lr</span> <span class="o">=</span> <span class="n">tmp</span> <span class="o">!=</span> <span class="mi">0</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">index</span><span class="p">[</span><span class="n">lr</span><span class="p">])</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">pos_1</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">lr</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">pos_2</span> <span class="o">=</span> <span class="n">index</span><span class="p">[</span><span class="n">lr</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+            <span class="n">p_v</span><span class="p">[:</span><span class="n">pos_1</span><span class="p">,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">p_v</span><span class="p">[(</span><span class="n">pos_2</span> <span class="o">+</span> <span class="mi">1</span><span class="p">):,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">p_v</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="k">return</span> <span class="n">p_v</span> <span class="o">*</span> <span class="n">p_h</span>
+
+
+<div class="viewcode-block" id="contact_points"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.common.contact_points">[docs]</a><span class="k">def</span> <span class="nf">contact_points</span><span class="p">(</span><span class="n">list_1</span><span class="p">,</span> <span class="n">list_2</span><span class="p">,</span> <span class="n">thresh</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function finds the groups of point of list1 and list2 that have a distance lesser that thresh</span>
+<span class="sd">    from at least one point of the other list.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">thresh2</span> <span class="o">=</span> <span class="n">thresh</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">contact_1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">contact_2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">l1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">list_1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">l2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">list_2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">list_index_1</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">list_index_2</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">indexes_l1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">l1</span><span class="p">)</span>
+    <span class="n">indexes_l2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">l2</span><span class="p">)</span>
+
+    <span class="n">mmm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">Progress </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">l1</span><span class="p">))</span>
+        <span class="n">d2</span> <span class="o">=</span> <span class="p">(</span><span class="n">list_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">list_2</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">list_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">list_2</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span>
+                    <span class="n">list_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">list_2</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">d2</span> <span class="o">&lt;</span> <span class="n">thresh2</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">mmm</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">mmm</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">d2</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+
+            <span class="n">list_index_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">list_index_1</span><span class="p">,</span> <span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+            <span class="n">list_index_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">list_index_2</span><span class="p">,</span> <span class="n">indexes_l2</span><span class="p">[</span><span class="n">mask</span><span class="p">]])</span>
+
+            <span class="n">contact_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">contact_1</span><span class="p">,</span> <span class="n">mmm</span><span class="p">])</span>
+            <span class="n">contact_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">contact_2</span><span class="p">,</span> <span class="n">list_2</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]])</span>
+
+    <span class="n">list_index_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">list_index_2</span><span class="p">)</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">contact_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">contact_2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">aaa</span> <span class="o">=</span> <span class="n">contact_2</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">aaa</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">output</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span>
+        <span class="n">contact_2</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">l1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">contact_2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">mmm</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">Progress </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">l1</span><span class="p">))</span>
+        <span class="n">d2</span> <span class="o">=</span> <span class="p">(</span><span class="n">list_1</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">contact_2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">list_1</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">contact_2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span> <span class="o">+</span> <span class="p">(</span>
+                    <span class="n">list_1</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">contact_2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span> <span class="o">**</span> <span class="mi">2</span>
+        <span class="n">mmm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">d2</span><span class="p">))</span>
+    <span class="n">contact_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">contact_2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mmm</span><span class="p">)])</span>
+
+    <span class="k">return</span> <span class="n">contact_1</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">contact_2</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">list_index_1</span><span class="p">,</span> <span class="n">list_index_2</span></div>
+
+
+<div class="viewcode-block" id="build_cone"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.common.build_cone">[docs]</a><span class="k">def</span> <span class="nf">build_cone</span><span class="p">(</span><span class="n">z_max</span><span class="p">,</span> <span class="n">n_disk</span><span class="p">):</span>
+    <span class="n">dz</span> <span class="o">=</span> <span class="n">z_max</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">n_disk</span><span class="p">)</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">rad</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_disk</span><span class="p">):</span>
+        <span class="n">z</span> <span class="o">+=</span> <span class="n">dz</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span>
+
+        <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">res</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">z</span><span class="p">])])</span>
+    <span class="k">return</span> <span class="n">res</span></div>
+
+
+<div class="viewcode-block" id="concatenate_fig_plots"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.common.concatenate_fig_plots">[docs]</a><span class="k">def</span> <span class="nf">concatenate_fig_plots</span><span class="p">(</span><span class="n">list_</span><span class="p">):</span>
+    <span class="c1"># TODO: add documentation</span>
+    <span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_</span><span class="p">)</span>
+    <span class="n">res</span> <span class="o">=</span> <span class="n">list_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="n">n</span><span class="p">,</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">list_</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+    <span class="n">col_list</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="n">l</span><span class="p">)</span>
+    <span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">col_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+    <span class="k">if</span> <span class="n">l</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">l</span><span class="p">):</span>
+            <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">res</span><span class="p">,</span> <span class="n">list_</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+            <span class="n">n</span><span class="p">,</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">list_</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+            <span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">col</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">col_list</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+    <span class="k">return</span> <span class="n">res</span><span class="p">,</span> <span class="n">col</span></div>
+
+
+<span class="k">def</span> <span class="nf">_fix_bridge_real_bs</span><span class="p">(</span><span class="n">patch_ab</span><span class="p">,</span> <span class="n">patch_ag</span><span class="p">,</span> <span class="n">d_pp</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    This function isolates the different groups of points in two given sets (patches)</span>
+<span class="sd">    according to a cutoff distance Dpp.</span>
+<span class="sd">    It associates each group to the closest group of the other set and returns</span>
+<span class="sd">    a list of matched patches.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># TODO: add documentation. Maybe deprecated?</span>
+    <span class="c1"># processing  patches to remove islands</span>
+    <span class="c1"># ab</span>
+    <span class="n">index_ab_bd_</span> <span class="o">=</span> <span class="n">isolate_surfaces</span><span class="p">(</span><span class="n">patch_ab</span><span class="p">,</span> <span class="n">d_pp</span><span class="p">)</span>
+
+    <span class="n">val_ab</span><span class="p">,</span> <span class="n">counts_ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">index_ab_bd_</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="n">val_ab</span><span class="p">,</span> <span class="s2">&quot;counts&quot;</span><span class="p">,</span> <span class="n">counts_ab</span><span class="p">)</span>
+
+    <span class="c1"># ag</span>
+    <span class="n">index_ag_bd_</span> <span class="o">=</span> <span class="n">isolate_surfaces</span><span class="p">(</span><span class="n">patch_ag</span><span class="p">,</span> <span class="n">d_pp</span><span class="p">)</span>
+
+    <span class="n">val_ag</span><span class="p">,</span> <span class="n">counts_ag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">index_ag_bd_</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="n">val_ag</span><span class="p">,</span> <span class="s2">&quot;counts&quot;</span><span class="p">,</span> <span class="n">counts_ag</span><span class="p">)</span>
+
+    <span class="c1"># creating matrix of number of points in each group and label returned by IsolateSurface func.</span>
+    <span class="c1"># Columns are ordered from the biggest to the smallest patch.</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">counts_ab</span><span class="p">,</span> <span class="n">val_ab</span><span class="p">])</span>
+
+    <span class="c1"># s_c_ab = np.flip(tmp[:, np.argsort(tmp[0, :])], axis=1)</span>
+    <span class="n">s_c_ab</span> <span class="o">=</span> <span class="n">flip_matrix</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">counts_ag</span><span class="p">,</span> <span class="n">val_ag</span><span class="p">])</span>
+
+    <span class="n">s_c_ag</span> <span class="o">=</span> <span class="n">flip_matrix</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="c1"># finding center of mass of each group...</span>
+    <span class="n">cm_ab</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">cm_ag</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">s_c_ab</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]:</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">patch_ab</span><span class="p">[</span><span class="n">index_ab_bd_</span> <span class="o">==</span> <span class="n">l</span><span class="p">]</span>
+        <span class="n">cm_ab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">s_c_ag</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]:</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">patch_ag</span><span class="p">[</span><span class="n">index_ag_bd_</span> <span class="o">==</span> <span class="n">l</span><span class="p">]</span>
+        <span class="n">cm_ag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+
+    <span class="n">l_ag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">s_c_ag</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">l_ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">s_c_ab</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1"># computing distance matrix between the centers of the groups intra sets...</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">l_ab</span><span class="p">,</span> <span class="n">l_ag</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_ab</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_ag</span><span class="p">):</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cm_ab</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cm_ag</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+    <span class="c1"># associating groups according to the minimal distance...</span>
+    <span class="n">index_ab</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">index_ag</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">l_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="n">l_ag</span><span class="p">,</span> <span class="n">l_ab</span><span class="p">])</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_min</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">l_min</span> <span class="o">==</span> <span class="n">l_ab</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">index_ab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">index_ag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">d</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">d</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">index_ab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">index_ag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+
+    <span class="n">patch_ab_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">patch_ag_list</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="n">lab_ab</span> <span class="o">=</span> <span class="n">s_c_ab</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">index_ab</span><span class="p">]</span>
+    <span class="n">lab_ag</span> <span class="o">=</span> <span class="n">s_c_ag</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">index_ag</span><span class="p">]</span>
+
+    <span class="c1"># defining list of matched patches</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_min</span><span class="p">):</span>
+        <span class="n">patch_ab_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">patch_ab</span><span class="p">[</span><span class="n">index_ab_bd_</span> <span class="o">==</span> <span class="n">lab_ab</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+        <span class="n">patch_ag_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">patch_ag</span><span class="p">[</span><span class="n">index_ag_bd_</span> <span class="o">==</span> <span class="n">lab_ag</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+
+    <span class="k">return</span> <span class="n">patch_ab_list</span><span class="p">,</span> <span class="n">patch_ag_list</span>
+
+
+<span class="k">def</span> <span class="nf">_isolate_isosurface</span><span class="p">(</span><span class="n">my_prot</span><span class="p">,</span> <span class="n">min_v</span><span class="p">,</span> <span class="n">max_v</span><span class="p">):</span>
+    <span class="c1"># TODO: maybe deprecated?</span>
+    <span class="c1"># This function groups points nearer than minD</span>
+
+    <span class="n">_DEB_</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="n">lx</span><span class="p">,</span> <span class="n">ly</span><span class="p">,</span> <span class="n">lz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">my_prot</span><span class="p">)</span>
+
+    <span class="n">prot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">my_prot</span><span class="p">)</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">prot</span> <span class="o">&gt;=</span> <span class="n">min_v</span><span class="p">,</span> <span class="n">prot</span> <span class="o">&lt;=</span> <span class="n">max_v</span><span class="p">)</span>
+    <span class="n">prot</span><span class="p">[:,</span> <span class="p">:,</span> <span class="p">:]</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">prot</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span> <span class="o">=</span> <span class="mf">1.</span>
+    <span class="n">prot_label</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">prot</span><span class="p">)</span>
+
+    <span class="c1"># starting from label = 2</span>
+    <span class="n">lab</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="c1"># defining probe points</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">))</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">tmp</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="mi">1</span>
+    <span class="n">z</span> <span class="o">=</span> <span class="n">z</span> <span class="o">-</span> <span class="mi">1</span>
+
+    <span class="c1"># computing number of points without label</span>
+    <span class="n">n_left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">prot</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+
+    <span class="c1"># starting iterating over different surfaces</span>
+    <span class="k">while</span> <span class="n">n_left</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">count</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">pos__</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">prot</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">_DEB_</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pos__&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">pos__</span><span class="p">))</span>
+
+        <span class="c1"># seeding: first unlabeled point takes lab label.</span>
+        <span class="n">prot_label</span><span class="p">[</span><span class="n">pos__</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pos__</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pos__</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">lab</span>
+        <span class="n">prot</span><span class="p">[</span><span class="n">pos__</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pos__</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">pos__</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">0</span><span class="p">]]</span> <span class="o">=</span> <span class="n">lab</span>
+
+        <span class="k">if</span> <span class="n">_DEB_</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;prot&quot;</span><span class="p">,</span> <span class="n">prot</span><span class="p">)</span>
+
+        <span class="c1"># iterating to find points belonging to the same surface...</span>
+        <span class="k">while</span> <span class="n">count</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+            <span class="n">pos_s</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">prot</span> <span class="o">==</span> <span class="n">lab</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pos_s</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="k">break</span>
+            <span class="c1"># creating mask for points still to be processed</span>
+            <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">prot</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">prot</span> <span class="o">!=</span> <span class="n">lab</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">_DEB_</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;l&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">pos_s</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">pos_s</span><span class="p">)[</span><span class="mi">1</span><span class="p">]):</span>
+                <span class="k">if</span> <span class="n">_DEB_</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;pos&quot;</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">pos_s</span><span class="p">))</span>
+                <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">pos_s</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                    <span class="n">xxxx</span> <span class="o">=</span> <span class="n">pos_s</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+                    <span class="n">yyyy</span> <span class="o">=</span> <span class="n">pos_s</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+                    <span class="n">zzzz</span> <span class="o">=</span> <span class="n">pos_s</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">xxxx</span> <span class="o">=</span> <span class="n">pos_s</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">yyyy</span> <span class="o">=</span> <span class="n">pos_s</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+                    <span class="n">zzzz</span> <span class="o">=</span> <span class="n">pos_s</span><span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="n">i</span><span class="p">]</span>
+                <span class="n">x_</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="n">xxxx</span>
+                <span class="n">y_</span> <span class="o">=</span> <span class="n">y</span> <span class="o">+</span> <span class="n">yyyy</span>
+                <span class="n">z_</span> <span class="o">=</span> <span class="n">z</span> <span class="o">+</span> <span class="n">zzzz</span>
+
+                <span class="n">mask_x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">x_</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x_</span> <span class="o">&lt;</span> <span class="n">lx</span><span class="p">)</span>
+                <span class="n">mask_y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">y_</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y_</span> <span class="o">&lt;</span> <span class="n">ly</span><span class="p">)</span>
+                <span class="n">mask_z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">z_</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">z_</span> <span class="o">&lt;</span> <span class="n">lz</span><span class="p">)</span>
+
+                <span class="n">mask_xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mask_x</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mask_y</span><span class="p">,</span> <span class="n">mask_z</span><span class="p">))</span>
+
+                <span class="n">x_</span> <span class="o">=</span> <span class="n">x_</span><span class="p">[</span><span class="n">mask_xyz</span><span class="p">]</span>
+                <span class="n">y_</span> <span class="o">=</span> <span class="n">y_</span><span class="p">[</span><span class="n">mask_xyz</span><span class="p">]</span>
+                <span class="n">z_</span> <span class="o">=</span> <span class="n">z_</span><span class="p">[</span><span class="n">mask_xyz</span><span class="p">]</span>
+                <span class="k">if</span> <span class="n">_DEB_</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;xyz&quot;</span><span class="p">,</span> <span class="n">x_</span><span class="p">,</span> <span class="n">y_</span><span class="p">,</span> <span class="n">z_</span><span class="p">)</span>
+
+                <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x_</span><span class="p">)):</span>
+                    <span class="k">if</span> <span class="n">prot</span><span class="p">[</span><span class="n">x_</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">y_</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">z_</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+                        <span class="n">prot</span><span class="p">[</span><span class="n">x_</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">y_</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">z_</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="n">lab</span>
+                        <span class="n">prot_label</span><span class="p">[</span><span class="n">x_</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">y_</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">z_</span><span class="p">[</span><span class="n">j</span><span class="p">]]</span> <span class="o">=</span> <span class="n">lab</span>
+                        <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+
+                <span class="k">if</span> <span class="n">_DEB_</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;prot_2&quot;</span><span class="p">,</span> <span class="n">prot</span><span class="p">)</span>
+
+                <span class="c1"># removing processed point from system</span>
+                <span class="n">prot</span><span class="p">[</span><span class="n">xxxx</span><span class="p">,</span> <span class="n">yyyy</span><span class="p">,</span> <span class="n">zzzz</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+                <span class="n">mm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">prot</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">prot</span> <span class="o">!=</span> <span class="n">lab</span><span class="p">)</span>
+
+                <span class="c1"># creating mask for  point still to be processed</span>
+                <span class="n">mmm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">mm</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+
+                <span class="n">mask</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">logical_and</span><span class="p">(</span><span class="n">prot</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">,</span> <span class="n">prot</span> <span class="o">!=</span> <span class="n">lab</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">_DEB_</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;prot_c&quot;</span><span class="p">,</span> <span class="n">prot</span><span class="p">)</span>
+
+        <span class="c1"># creating a new label</span>
+        <span class="n">lab</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="c1"># looking for how many points still to be processed</span>
+        <span class="n">n_left</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">prot</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">left </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">n_left</span><span class="p">)</span>
+        <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">prot_label</span>
+
+
+<div class="viewcode-block" id="log10_factorial"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.common.log10_factorial">[docs]</a><span class="k">def</span> <span class="nf">log10_factorial</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compute ``log(n!)`` with the base 10 logarithm</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    `n`: int</span>
+<span class="sd">        Input values. If n &lt; 0, the return value is 0</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    real</span>
+<span class="sd">        Factorial of log10(n): ``log(n!) = log(n) + log(n-1) + ... + log(1)``</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; log10_factorial(10)</span>
+<span class="sd">    6.559763032876794</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">log10</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">log10_factorial</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mattia Miotto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

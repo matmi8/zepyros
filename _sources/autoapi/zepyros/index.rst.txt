@@ -1,0 +1,513 @@
+:py:mod:`zepyros`
+=================
+
+.. py:module:: zepyros
+
+
+Submodules
+----------
+.. toctree::
+   :titlesonly:
+   :maxdepth: 1
+
+   advanced/index.rst
+   common/index.rst
+   surface/index.rst
+   zernike/index.rst
+
+
+Package Contents
+----------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   zepyros.Surface
+   zepyros.Zernike2D
+   zepyros.Zernike3D
+
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   zepyros.rotate_matrix
+   zepyros.rotate_patch
+   zepyros.flip_matrix
+   zepyros.isolate_surfaces
+   zepyros.contact_points
+   zepyros.build_cone
+   zepyros.concatenate_fig_plots
+   zepyros.log10_factorial
+   zepyros.get_zernike
+   zepyros.plot_disk
+   zepyros.plot_coeff
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   zepyros.__version__
+
+
+.. py:data:: __version__
+
+   
+
+.. py:class:: Surface(surface, patch_num=5, r0=11, theta_max=45, real_br=None)
+
+
+   Surface is a class that manages a set of points that form a surface;
+   it also allows analysis of parts of the surface itself, grouping the points into patches.
+
+   :ivar surface: coordinate array of ``x``, ``y``, ``z`` points and ``nx``, ``ny`` and ``nz`` unit vectors
+   :vartype surface: ndarray or pandas
+   :ivar patch_num:
+   :vartype patch_num: int
+   :ivar r0: the radius of the patch. The unit of measurement depends on that of the points in ``surface``
+   :vartype r0: float
+   :ivar theta_max:
+   :vartype theta_max: float
+   :ivar real_br:
+   :vartype real_br: array
+
+   .. py:method:: enlarge_pixels(plane)
+      :staticmethod:
+
+      Given a square matrix NxN with N < 400, repeats each cell
+      in order to expand the starting matrix
+
+      :param `plane`: square matrix to expand
+      :type `plane`: ndarray
+
+      :returns: expanded square matrix
+      :rtype: `ndarray`
+
+      .. rubric:: Example
+
+      >>> surf = Surface(np.zeros(100, 6))
+      >>> mat = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+      >>> mat
+      array([[1, 2, 3],
+             [4, 5, 6],
+             [7, 8, 9]])
+      >>> surf.enlarge_pixels(mat)
+      array([[1., 1., 1., ..., 3., 3., 3.],
+             [1., 1., 1., ..., 3., 3., 3.],
+             [1., 1., 1., ..., 3., 3., 3.],
+             ...,
+             [7., 7., 7., ..., 9., 9., 9.],
+             [7., 7., 7., ..., 9., 9., 9.],
+             [7., 7., 7., ..., 9., 9., 9.]])
+      >>> surf.enlarge_pixels(mat).shape
+      (768, 768)
+
+
+   .. py:method:: build_patch(point_ndx, d_min)
+
+      Given the index of a point belonging to a surface, define a patch
+      as the set of points on that surface that are less than a given
+      threshold distance from the point
+
+      :param `point_ndx`: the index of the surface point chosen as the center of the patch
+      :type `point_ndx`: int
+      :param `d_min`: the distance a surface point must be from the center to belong to the patch
+      :type `d_min`: float
+
+      :returns:
+
+                - the points on the surface belonging to the patch (`ndarray`)
+                - the indices of the surface points belonging to the patch (`ndarray`)
+      :rtype: `tuple`
+
+
+   .. py:method:: build_patch_no_is(point_pos, d_min)
+
+
+   .. py:method:: find_patch_orientation(rot_protein, patch_mask)
+
+
+   .. py:method:: create_plane(patch, z_c, n_p=20)
+
+
+   .. py:method:: find_origin(rotated_patch, check=0)
+
+      This function finds the origin of a cone that incorporates the patch with a maximum angle of 45 degrees.
+      Input:
+      - patch points (matrix)
+      - CHECK, if 1 the cone is plotted.
+
+      Output:
+      - the origin (z-axis) of the cone
+
+      TODO: generalize to a chosen degree...
+
+
+   .. py:method:: fill_inner_gap(plane_)
+
+      This function fills the inner gaps (pixel with zero value) in the unit circle of a NxN plane.
+      It replaces the zero pixel with the mean of the nearby pixels, only for those pixels that have non-zero near pixels.
+      Input:
+      - plane (square matrix)
+
+      Output:
+      - Filled plane
+
+
+   .. py:method:: fill_gap_everywhere(plane_)
+
+      This function fills the gaps (pixel with zero value) in the unit circle of a NxN plane.
+      It replaces the zero pixel with the mean of the nearby pixels.
+      Input:
+      - plane (square matrix)
+
+      Output:
+      - Filled plane
+
+
+   .. py:method:: patch_reorient(patch_points, verso)
+
+
+
+.. py:class:: Zernike2D(image_file)
+
+
+   This class performs the 2D decomposition of a figure in its Zernike descriptors
+
+   .. py:method:: circle_image(image)
+
+
+   .. py:method:: prepare_image(datafile)
+
+
+   .. py:method:: compute_dot(mat_a, mat_b)
+
+
+   .. py:method:: compute_coeff_nm(F, n, m)
+
+
+   .. py:method:: from_cartesian_to_polar_plane(x, y)
+
+
+   .. py:method:: r_nm(n, m, l_r)
+
+
+   .. py:method:: phi_m(theta, m)
+
+
+   .. py:method:: build_plane(n)
+
+
+   .. py:method:: count_moment(n)
+
+      This function computes the number of moment that an expansion to the n order will produce.
+
+
+   .. py:method:: compute_moment(n, m)
+
+
+   .. py:method:: zernike_reconstruction(order, plot=True)
+
+
+   .. py:method:: zernike_decomposition(order)
+
+
+
+.. py:class:: Zernike3D(n_l)
+
+
+   This class performs the 3D decomposition of a (voxelized) shape in the Zernike
+   basis up to a given expansion order.
+
+   .. py:method:: prepare_zernike(n_l=128)
+
+      This function initializes the quantities need to fastly compute zernike moments.
+      It takes as input the voxel grid edge.
+
+
+   .. py:method:: prepare_image(image_file)
+
+      This function read a dx file and return a 3 x Nl linear array containing the value of each voxel.
+      It also computes the Nl value assuming that the voxelization was performed on a Nl x Nl x Nl cube.
+
+
+   .. py:method:: epsilon(l, m)
+
+      This function computes the epsilon term of the Zernike moment, Z_nl^m = epsilon(l,m)*R(n,l)
+
+
+   .. py:method:: c_lm(l, m)
+
+      This function computes one of the terms of epsilon(l,m)
+
+
+   .. py:method:: q_klv(k, l, v)
+
+      This function computes one of the  terms of R(n,l).
+
+
+   .. py:method:: r_nl(n, l)
+
+      This function computes the R term of the Zernike moment, Z_nl^m = epsilon(l,m)*R(n,l)
+
+
+   .. py:method:: compute_3d_moment(n=0, l=0, m=0, DICT_ON=True)
+
+      This function computes the Z_nl^m Zernike moment and stores it in a dictionary if DICT_ON = True (default).
+
+      Note 1) Saving the moments in the dictionary is high memory consuming.
+
+      Note 2) Each moment is one of the orthonormal basis vector of the Zernike expansion.
+      Given a 3D function, f(x,y,z) defined in the unitary sphere, it can be decomposed in the
+      Zernike basis as:
+      f(x,y,z) = sum_nlm c_nlm Z_nlm
+
+      Note 3) Z_nl^m = (-1)^m conjugate(Z_nl^m)
+
+
+   .. py:method:: compute_3d_coefficient(f, n, l, m)
+
+      This function computes the Zernike coeffient associated to the Z_nlm moment as
+
+      c_nlm = int_(R<1) dxdydz F(x,y,z) * conjugate(Z_nlm)
+
+      Note that since we have voxelized the space, the integral becomes a sum over the voxels
+      divided by the number of voxels (the voxels inside the R = 1 sphere).
+
+
+   .. py:method:: bracket(z1, z2)
+
+      This function computes the braket as
+      c = < Z1 | Z2> = int dxdydz Z1 * conjugate(Z2)
+
+
+   .. py:method:: initiate_cube(n=128)
+
+      This function initializes the x,y,z and r meshes on the 1x1x1 cube centered in (0,0,0).
+
+
+   .. py:method:: from_unit_sphere_to_cube(img, n_l)
+
+      This function takes as input the linear array of voxel values (in the unitary sphere, r<1) and
+      return a Nl x Nl x Nl voxel grid.
+      Input:
+      - img, an 1d array.
+      - Nl, a scalar, the cube edge (Nl x Nl x Nl).
+      Return:
+      - data, a (Nl x Nl x Nl) matrix containg the voxelized image.
+
+
+   .. py:method:: from_cube_to_unit_sphere(data)
+
+      This function takes as input the Nl x Nl x Nl voxel grid and returns a linear array containing the values of the
+      voxels in the unitary sphere, r<1.
+      Input:
+      - data, a (Nl x Nl x Nl) matrix containing the voxelized image.
+      Return:
+      - img, an 1d array.
+
+
+   .. py:method:: compute_invariant(c_set, n_t)
+
+      This function computes the invariant for a dictionary containing all the coefficients.
+
+
+   .. py:method:: decomposition(fig, n_t)
+
+      This function decomposes a 3D image in the Zernike basis up to order N.
+      It returns the reconstructed image and the coefficient list (as a dictionary).
+
+
+   .. py:method:: plot3d(myobj_list, isosuface_vec, r_thres=0.95, solo_real=True)
+
+      This function plots the isosurfaces of the passed voxel matrixes.
+
+
+
+.. py:function:: rotate_matrix(cos, sin, axis)
+
+   Given sine and cosine of the angle and the axis of rotation returns
+   the rotation matrix
+
+   :param `cos`: the cosine of the angle
+   :type `cos`: real
+   :param `sin`: the sine of the angle
+   :type `sin`: real
+   :param `axis`: the axis of rotation: 0 for x, 1 for y and 2 for z
+   :type `axis`: integer
+
+   :returns: the rotation matrix
+   :rtype: matrix
+
+
+.. py:function:: rotate_patch(patch, v_start, v_z, pin)
+
+   Rotates a set of points by an angle defined by a given unit vector
+   and the z axis with a positive or negative direction
+
+   :param `patch`: array of points that make up the portion of the surface to orient.
+                   If the array contains more than three columns, only the first three will be selected
+   :type `patch`: ndarray
+   :param `v_start`: array of shape (1, 3) which indicates the initial unit vector to orient
+                     and make coincide with the z axis
+   :type `v_start`: ndarray
+   :param `v_z`: array of shape (1, 3) indicating the positive (0, 0, 1)
+                 or negative (0, 0, -1) oriented z-axis unit vector
+   :type `v_z`: ndarray
+   :param `pin`: array of shape (1, 3) indicating the origin of ``v_start``
+   :type `pin`: ndarray
+
+   :returns: # TODO: add return docs
+   :rtype: `tuple`
+
+
+.. py:function:: flip_matrix(mat, axis)
+
+   Flips a matrix based on its axis
+
+   :param `mat`: the matrix to flip
+   :type `mat`: ndarray
+   :param `axis`: the axis about which to flip the ndarray (0 for x, 1 for y)
+   :type `axis`: int
+
+   :returns: the flipped matrix with respect the axis
+   :rtype: matrix
+
+   .. rubric:: Examples
+
+   >>> mat = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+   >>> mat
+   array([[1, 2, 3],
+      [4, 5, 6],
+      [7, 8, 9]])
+   >>> flip_matrix(mat, 0)
+   array([[7, 8, 9],
+      [4, 5, 6],
+      [1, 2, 3]])
+   >>> flip_matrix(mat, 1)
+   array([[3, 2, 1],
+      [6, 5, 4],
+      [9, 8, 7]])
+
+
+.. py:function:: isolate_surfaces(surface, min_d=1.0)
+
+   Given a surface of x, y, z points, form groups of points that are
+   at a distance less than a given threshold
+
+   :param `surface`: array of points where each row is a point in space.
+                     If the number of columns is greater than three,
+                     only the first three columns will be used
+   :type `surface`: ndarray
+   :param `min_d`: the minimum distance at which two points must be located
+                   to be grouped in the same cluster.
+                   The unit of measurement depends on that of the points in `surface`
+   :type `min_d`: float
+
+   :returns: list of integer (starts from 2), where each integer represents
+             the label of a specific group. The i-th element indicates the group
+             to which the i-th point of the initial surface belongs
+   :rtype: array
+
+   .. rubric:: Examples
+
+   >>> mat = np.array([[4.5, 4.5, 4.5], [1.5, 1.5, 1.5], [2., 1., 1.5], [5., 5., 5.], [1., 1., 1.]])
+   >>> mat
+   array([[4.5, 4.5, 4.5],
+          [1.5, 1.5, 1.5],
+          [2. , 1. , 1.5],
+          [5. , 5. , 5. ],
+          [1. , 1. , 1. ]])
+   >>> isolate_surfaces(mat, 1)
+   array([2, 3, 3, 2, 3], dtype=int8)
+
+
+.. py:function:: contact_points(list_1, list_2, thresh)
+
+   This function finds the groups of point of list1 and list2 that have a distance lesser that thresh
+   from at least one point of the other list.
+
+
+.. py:function:: build_cone(z_max, n_disk)
+
+
+.. py:function:: concatenate_fig_plots(list_)
+
+
+.. py:function:: log10_factorial(n)
+
+   Compute ``log(n!)`` with the base 10 logarithm
+
+   :param `n`: Input values. If n < 0, the return value is 0
+   :type `n`: int
+
+   :returns: Factorial of log10(n): ``log(n!) = log(n) + log(n-1) + ... + log(1)``
+   :rtype: real
+
+   .. rubric:: Examples
+
+   >>> log10_factorial(10)
+   6.559763032876794
+
+
+.. py:function:: get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25)
+
+   Identifies a patch and calculates Zernike polynomials that characterize it
+
+   :param `surf`: surface of the whole system with 6 columns: coordinate ``x``, ``y``, ``z`` points
+                  and ``nx``, ``ny`` and ``nz`` unit vectors
+   :type `surf`: ndarray
+   :param `radius`: the radius of the patch
+   :type `radius`: float
+   :param `ndx`: index of the point selected as center of the patch
+   :type `ndx`: int
+   :param `order`: the expansion order of polynomials
+   :type `order`: int
+   :param `verso`: the direction of the patch with respect to its axis:
+                   1 for the positive direction, -1 for the negative direction (default: ``1``)
+   :type `verso`: int
+   :param `n_pixel`: number of pixels per side with which the patch will be reconstructed (default: ``25``)
+   :type `n_pixel`: int
+
+   :returns:
+
+             - polynomial coefficients (`ndarray`)
+             - Zernike 2d disk data (`ndarray`)
+             - the indices of the surface points belonging to the patch (`array`)
+   :rtype: `tuple`
+
+
+.. py:function:: plot_disk(df_disk, save_path=None)
+
+   Plots 2d Zernike disk
+
+   :param `disk_data`: the disk data obtained from ``get_zernike`` function
+   :type `disk_data`: ndarray
+   :param `save_path`: optional; the path where to save the disk image
+   :type `save_path`: string
+
+   :returns: the disk image as object
+   :rtype: `matplotlib.figure.Figure`
+
+
+.. py:function:: plot_coeff(coeff, save_path=None)
+
+   Plots the zernike invariants, i.e. the absolute value of the real part
+   of the coefficients of the polynomials
+
+   :param ``coeff``: the zernike invariants obtained for example by ``get_zernike`` function
+   :type ``coeff``: ndarray
+   :param ``save_path``: optional; the path where to save the disk image
+   :type ``save_path``: string
+
+   :returns: the zernike invariants image as object
+   :rtype: `matplotlib.figure.Figure`
+
+

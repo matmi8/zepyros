@@ -1,0 +1,147 @@
+:py:mod:`zepyros.surface`
+=========================
+
+.. py:module:: zepyros.surface
+
+
+Module Contents
+---------------
+
+Classes
+~~~~~~~
+
+.. autoapisummary::
+
+   zepyros.surface.Surface
+
+
+
+
+Attributes
+~~~~~~~~~~
+
+.. autoapisummary::
+
+   zepyros.surface.DEB_FIND_ORIENT
+
+
+.. py:data:: DEB_FIND_ORIENT
+   :value: 0
+
+   
+
+.. py:class:: Surface(surface, patch_num=5, r0=11, theta_max=45, real_br=None)
+
+
+   Surface is a class that manages a set of points that form a surface;
+   it also allows analysis of parts of the surface itself, grouping the points into patches.
+
+   :ivar surface: coordinate array of ``x``, ``y``, ``z`` points and ``nx``, ``ny`` and ``nz`` unit vectors
+   :vartype surface: ndarray or pandas
+   :ivar patch_num:
+   :vartype patch_num: int
+   :ivar r0: the radius of the patch. The unit of measurement depends on that of the points in ``surface``
+   :vartype r0: float
+   :ivar theta_max:
+   :vartype theta_max: float
+   :ivar real_br:
+   :vartype real_br: array
+
+   .. py:method:: enlarge_pixels(plane)
+      :staticmethod:
+
+      Given a square matrix NxN with N < 400, repeats each cell
+      in order to expand the starting matrix
+
+      :param `plane`: square matrix to expand
+      :type `plane`: ndarray
+
+      :returns: expanded square matrix
+      :rtype: `ndarray`
+
+      .. rubric:: Example
+
+      >>> surf = Surface(np.zeros(100, 6))
+      >>> mat = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+      >>> mat
+      array([[1, 2, 3],
+             [4, 5, 6],
+             [7, 8, 9]])
+      >>> surf.enlarge_pixels(mat)
+      array([[1., 1., 1., ..., 3., 3., 3.],
+             [1., 1., 1., ..., 3., 3., 3.],
+             [1., 1., 1., ..., 3., 3., 3.],
+             ...,
+             [7., 7., 7., ..., 9., 9., 9.],
+             [7., 7., 7., ..., 9., 9., 9.],
+             [7., 7., 7., ..., 9., 9., 9.]])
+      >>> surf.enlarge_pixels(mat).shape
+      (768, 768)
+
+
+   .. py:method:: build_patch(point_ndx, d_min)
+
+      Given the index of a point belonging to a surface, define a patch
+      as the set of points on that surface that are less than a given
+      threshold distance from the point
+
+      :param `point_ndx`: the index of the surface point chosen as the center of the patch
+      :type `point_ndx`: int
+      :param `d_min`: the distance a surface point must be from the center to belong to the patch
+      :type `d_min`: float
+
+      :returns:
+
+                - the points on the surface belonging to the patch (`ndarray`)
+                - the indices of the surface points belonging to the patch (`ndarray`)
+      :rtype: `tuple`
+
+
+   .. py:method:: build_patch_no_is(point_pos, d_min)
+
+
+   .. py:method:: find_patch_orientation(rot_protein, patch_mask)
+
+
+   .. py:method:: create_plane(patch, z_c, n_p=20)
+
+
+   .. py:method:: find_origin(rotated_patch, check=0)
+
+      This function finds the origin of a cone that incorporates the patch with a maximum angle of 45 degrees.
+      Input:
+      - patch points (matrix)
+      - CHECK, if 1 the cone is plotted.
+
+      Output:
+      - the origin (z-axis) of the cone
+
+      TODO: generalize to a chosen degree...
+
+
+   .. py:method:: fill_inner_gap(plane_)
+
+      This function fills the inner gaps (pixel with zero value) in the unit circle of a NxN plane.
+      It replaces the zero pixel with the mean of the nearby pixels, only for those pixels that have non-zero near pixels.
+      Input:
+      - plane (square matrix)
+
+      Output:
+      - Filled plane
+
+
+   .. py:method:: fill_gap_everywhere(plane_)
+
+      This function fills the gaps (pixel with zero value) in the unit circle of a NxN plane.
+      It replaces the zero pixel with the mean of the nearby pixels.
+      Input:
+      - plane (square matrix)
+
+      Output:
+      - Filled plane
+
+
+   .. py:method:: patch_reorient(patch_points, verso)
+
+
+

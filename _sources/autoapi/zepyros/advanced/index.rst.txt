@@ -1,0 +1,75 @@
+:py:mod:`zepyros.advanced`
+==========================
+
+.. py:module:: zepyros.advanced
+
+
+Module Contents
+---------------
+
+
+Functions
+~~~~~~~~~
+
+.. autoapisummary::
+
+   zepyros.advanced.get_zernike
+   zepyros.advanced.plot_disk
+   zepyros.advanced.plot_coeff
+
+
+
+.. py:function:: get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25)
+
+   Identifies a patch and calculates Zernike polynomials that characterize it
+
+   :param `surf`: surface of the whole system with 6 columns: coordinate ``x``, ``y``, ``z`` points
+                  and ``nx``, ``ny`` and ``nz`` unit vectors
+   :type `surf`: ndarray
+   :param `radius`: the radius of the patch
+   :type `radius`: float
+   :param `ndx`: index of the point selected as center of the patch
+   :type `ndx`: int
+   :param `order`: the expansion order of polynomials
+   :type `order`: int
+   :param `verso`: the direction of the patch with respect to its axis:
+                   1 for the positive direction, -1 for the negative direction (default: ``1``)
+   :type `verso`: int
+   :param `n_pixel`: number of pixels per side with which the patch will be reconstructed (default: ``25``)
+   :type `n_pixel`: int
+
+   :returns:
+
+             - polynomial coefficients (`ndarray`)
+             - Zernike 2d disk data (`ndarray`)
+             - the indices of the surface points belonging to the patch (`array`)
+   :rtype: `tuple`
+
+
+.. py:function:: plot_disk(df_disk, save_path=None)
+
+   Plots 2d Zernike disk
+
+   :param `disk_data`: the disk data obtained from ``get_zernike`` function
+   :type `disk_data`: ndarray
+   :param `save_path`: optional; the path where to save the disk image
+   :type `save_path`: string
+
+   :returns: the disk image as object
+   :rtype: `matplotlib.figure.Figure`
+
+
+.. py:function:: plot_coeff(coeff, save_path=None)
+
+   Plots the zernike invariants, i.e. the absolute value of the real part
+   of the coefficients of the polynomials
+
+   :param ``coeff``: the zernike invariants obtained for example by ``get_zernike`` function
+   :type ``coeff``: ndarray
+   :param ``save_path``: optional; the path where to save the disk image
+   :type ``save_path``: string
+
+   :returns: the zernike invariants image as object
+   :rtype: `matplotlib.figure.Figure`
+
+

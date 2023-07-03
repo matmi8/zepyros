@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>zepyros.surface &mdash; zepyros  documentation</title>
+      <link rel="stylesheet" href="../../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" type="text/css" />
+      <link rel="stylesheet" href="../../../_static/graphviz.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../../" id="documentation_options" src="../../../_static/documentation_options.js"></script>
+        <script src="../../../_static/jquery.js"></script>
+        <script src="../../../_static/underscore.js"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+        <script src="../../../_static/doctools.js"></script>
+        <script src="../../../_static/sphinx_highlight.js"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="zepyros.zernike" href="../zernike/index.html" />
+    <link rel="prev" title="zepyros.common" href="../common/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            zepyros
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../../example.html">Example usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../changelog.html">Changelog</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../conduct.html">Code of Conduct</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros</span></code></a><ul class="current">
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../advanced/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.advanced</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../common/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.common</span></code></a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.surface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../zernike/index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.zernike</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">zepyros</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros</span></code></a></li>
+      <li class="breadcrumb-item active"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.surface</span></code></li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/zepyros/surface/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-zepyros.surface">
+<span id="zepyros-surface"></span><h1><a class="reference internal" href="#module-zepyros.surface" title="zepyros.surface"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.surface</span></code></a><a class="headerlink" href="#module-zepyros.surface" title="Permalink to this heading"></a></h1>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
+<section id="classes">
+<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.surface.Surface" title="zepyros.surface.Surface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Surface</span></code></a></p></td>
+<td><p>Surface is a class that manages a set of points that form a surface;</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="attributes">
+<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.surface.DEB_FIND_ORIENT" title="zepyros.surface.DEB_FIND_ORIENT"><code class="xref py py-obj docutils literal notranslate"><span class="pre">DEB_FIND_ORIENT</span></code></a></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py data">
+<dt class="sig sig-object py" id="zepyros.surface.DEB_FIND_ORIENT">
+<span class="sig-prename descclassname"><span class="pre">zepyros.surface.</span></span><span class="sig-name descname"><span class="pre">DEB_FIND_ORIENT</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">0</span></em><a class="headerlink" href="#zepyros.surface.DEB_FIND_ORIENT" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="zepyros.surface.Surface">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zepyros.surface.</span></span><span class="sig-name descname"><span class="pre">Surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_br</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/surface.html#Surface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.surface.Surface" title="Permalink to this definition"></a></dt>
+<dd><p>Surface is a class that manages a set of points that form a surface;
+it also allows analysis of parts of the surface itself, grouping the points into patches.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>surface</strong> (<em>ndarray</em><em> or </em><em>pandas</em>) – coordinate array of <code class="docutils literal notranslate"><span class="pre">x</span></code>, <code class="docutils literal notranslate"><span class="pre">y</span></code>, <code class="docutils literal notranslate"><span class="pre">z</span></code> points and <code class="docutils literal notranslate"><span class="pre">nx</span></code>, <code class="docutils literal notranslate"><span class="pre">ny</span></code> and <code class="docutils literal notranslate"><span class="pre">nz</span></code> unit vectors</p></li>
+<li><p><strong>patch_num</strong> (<em>int</em>) – </p></li>
+<li><p><strong>r0</strong> (<em>float</em>) – the radius of the patch. The unit of measurement depends on that of the points in <code class="docutils literal notranslate"><span class="pre">surface</span></code></p></li>
+<li><p><strong>theta_max</strong> (<em>float</em>) – </p></li>
+<li><p><strong>real_br</strong> (<em>array</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.surface.Surface.enlarge_pixels">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">enlarge_pixels</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plane</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/surface.html#Surface.enlarge_pixels"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.surface.Surface.enlarge_pixels" title="Permalink to this definition"></a></dt>
+<dd><p>Given a square matrix NxN with N &lt; 400, repeats each cell
+in order to expand the starting matrix</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>plane</strong> (<em>ndarray</em>) – square matrix to expand</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>expanded square matrix</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>ndarray</cite></p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">surf</span> <span class="o">=</span> <span class="n">Surface</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">mat</span>
+<span class="go">array([[1, 2, 3],</span>
+<span class="go">       [4, 5, 6],</span>
+<span class="go">       [7, 8, 9]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">surf</span><span class="o">.</span><span class="n">enlarge_pixels</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span>
+<span class="go">array([[1., 1., 1., ..., 3., 3., 3.],</span>
+<span class="go">       [1., 1., 1., ..., 3., 3., 3.],</span>
+<span class="go">       [1., 1., 1., ..., 3., 3., 3.],</span>
+<span class="go">       ...,</span>
+<span class="go">       [7., 7., 7., ..., 9., 9., 9.],</span>
+<span class="go">       [7., 7., 7., ..., 9., 9., 9.],</span>
+<span class="go">       [7., 7., 7., ..., 9., 9., 9.]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">surf</span><span class="o">.</span><span class="n">enlarge_pixels</span><span class="p">(</span><span class="n">mat</span><span class="p">)</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(768, 768)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.surface.Surface.build_patch">
+<span class="sig-name descname"><span class="pre">build_patch</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_ndx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_min</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/surface.html#Surface.build_patch"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.surface.Surface.build_patch" title="Permalink to this definition"></a></dt>
+<dd><p>Given the index of a point belonging to a surface, define a patch
+as the set of points on that surface that are less than a given
+threshold distance from the point</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>point_ndx</strong> (<em>int</em>) – the index of the surface point chosen as the center of the patch</p></li>
+<li><p><strong>d_min</strong> (<em>float</em>) – the distance a surface point must be from the center to belong to the patch</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>the points on the surface belonging to the patch (<cite>ndarray</cite>)</p></li>
+<li><p>the indices of the surface points belonging to the patch (<cite>ndarray</cite>)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>tuple</cite></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.surface.Surface.build_patch_no_is">
+<span class="sig-name descname"><span class="pre">build_patch_no_is</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_min</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/surface.html#Surface.build_patch_no_is"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.surface.Surface.build_patch_no_is" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.surface.Surface.find_patch_orientation">
+<span class="sig-name descname"><span class="pre">find_patch_orientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rot_protein</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_mask</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/surface.html#Surface.find_patch_orientation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.surface.Surface.find_patch_orientation" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.surface.Surface.create_plane">
+<span class="sig-name descname"><span class="pre">create_plane</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">patch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">z_c</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_p</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/surface.html#Surface.create_plane"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.surface.Surface.create_plane" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.surface.Surface.find_origin">
+<span class="sig-name descname"><span class="pre">find_origin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rotated_patch</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">check</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/surface.html#Surface.find_origin"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.surface.Surface.find_origin" title="Permalink to this definition"></a></dt>
+<dd><p>This function finds the origin of a cone that incorporates the patch with a maximum angle of 45 degrees.
+Input:
+- patch points (matrix)
+- CHECK, if 1 the cone is plotted.</p>
+<p>Output:
+- the origin (z-axis) of the cone</p>
+<p>TODO: generalize to a chosen degree…</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.surface.Surface.fill_inner_gap">
+<span class="sig-name descname"><span class="pre">fill_inner_gap</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plane_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/surface.html#Surface.fill_inner_gap"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.surface.Surface.fill_inner_gap" title="Permalink to this definition"></a></dt>
+<dd><p>This function fills the inner gaps (pixel with zero value) in the unit circle of a NxN plane.
+It replaces the zero pixel with the mean of the nearby pixels, only for those pixels that have non-zero near pixels.
+Input:
+- plane (square matrix)</p>
+<p>Output:
+- Filled plane</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.surface.Surface.fill_gap_everywhere">
+<span class="sig-name descname"><span class="pre">fill_gap_everywhere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plane_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/surface.html#Surface.fill_gap_everywhere"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.surface.Surface.fill_gap_everywhere" title="Permalink to this definition"></a></dt>
+<dd><p>This function fills the gaps (pixel with zero value) in the unit circle of a NxN plane.
+It replaces the zero pixel with the mean of the nearby pixels.
+Input:
+- plane (square matrix)</p>
+<p>Output:
+- Filled plane</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="zepyros.surface.Surface.patch_reorient">
+<span class="sig-name descname"><span class="pre">patch_reorient</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">patch_points</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verso</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/surface.html#Surface.patch_reorient"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.surface.Surface.patch_reorient" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../common/index.html" class="btn btn-neutral float-left" title="zepyros.common" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../zernike/index.html" class="btn btn-neutral float-right" title="zepyros.zernike" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Mattia Miotto.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
