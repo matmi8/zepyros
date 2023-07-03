@@ -96,36 +96,6 @@
 <span id="zepyros-common"></span><h1><a class="reference internal" href="#module-zepyros.common" title="zepyros.common"><code class="xref py py-mod docutils literal notranslate"><span class="pre">zepyros.common</span></code></a><a class="headerlink" href="#module-zepyros.common" title="Permalink to this heading"></a></h1>
 <section id="module-contents">
 <h2>Module Contents<a class="headerlink" href="#module-contents" title="Permalink to this heading"></a></h2>
-<section id="functions">
-<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this heading"></a></h3>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.common.rotate_matrix" title="zepyros.common.rotate_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rotate_matrix</span></code></a>(cos, sin, axis)</p></td>
-<td><p>Given sine and cosine of the angle and the axis of rotation returns</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#zepyros.common.rotate_patch" title="zepyros.common.rotate_patch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rotate_patch</span></code></a>(patch, v_start, v_z, pin)</p></td>
-<td><p>Rotates a set of points by an angle defined by a given unit vector</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.common.flip_matrix" title="zepyros.common.flip_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flip_matrix</span></code></a>(mat, axis)</p></td>
-<td><p>Flips a matrix based on its axis</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#zepyros.common.isolate_surfaces" title="zepyros.common.isolate_surfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isolate_surfaces</span></code></a>(surface[, min_d])</p></td>
-<td><p>Given a surface of x, y, z points, form groups of points that are</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.common.contact_points" title="zepyros.common.contact_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contact_points</span></code></a>(list_1, list_2, thresh)</p></td>
-<td><p>This function finds the groups of point of list1 and list2 that have a distance lesser that thresh</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#zepyros.common.build_cone" title="zepyros.common.build_cone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_cone</span></code></a>(z_max, n_disk)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.common.concatenate_fig_plots" title="zepyros.common.concatenate_fig_plots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concatenate_fig_plots</span></code></a>(list_)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#zepyros.common.log10_factorial" title="zepyros.common.log10_factorial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log10_factorial</span></code></a>(n)</p></td>
-<td><p>Compute <code class="docutils literal notranslate"><span class="pre">log(n!)</span></code> with the base 10 logarithm</p></td>
-</tr>
-</tbody>
-</table>
 <dl class="py function">
 <dt class="sig sig-object py" id="zepyros.common.rotate_matrix">
 <span class="sig-prename descclassname"><span class="pre">zepyros.common.</span></span><span class="sig-name descname"><span class="pre">rotate_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sin</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/common.html#rotate_matrix"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.common.rotate_matrix" title="Permalink to this definition"></a></dt>
@@ -252,19 +222,34 @@ to which the i-th point of the initial surface belongs</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="zepyros.common.contact_points">
 <span class="sig-prename descclassname"><span class="pre">zepyros.common.</span></span><span class="sig-name descname"><span class="pre">contact_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresh</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/common.html#contact_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.common.contact_points" title="Permalink to this definition"></a></dt>
-<dd><p>This function finds the groups of point of list1 and list2 that have a distance lesser that thresh
-from at least one point of the other list.</p>
+<dd><p>Given two lists of points, find the points in each list that are closer
+than a given threshold to at least one point in the other list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list_1</strong> (<em>ndarray</em>) – array of points in space. If the array contains more than three columns,
+only the first three will be selected</p></li>
+<li><p><strong>list_2</strong> (<em>ndarray</em>) – array of points in space. If the array contains more than three columns,
+only the first three will be selected</p></li>
+<li><p><strong>thresh</strong> (<em>float</em>) – the minimum distance at which two points in different lists must be located
+to be considered in contact.
+The unit of measurement depends on that of the points in <code class="docutils literal notranslate"><span class="pre">list_1</span></code> and <code class="docutils literal notranslate"><span class="pre">list_2</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>the points in <code class="docutils literal notranslate"><span class="pre">list_1</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_2</span></code> (<cite>ndarray</cite>)</p></li>
+<li><p>the points in <code class="docutils literal notranslate"><span class="pre">list_2</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_1</span></code> (<cite>ndarray</cite>)</p></li>
+<li><p>the indexes of the points in <code class="docutils literal notranslate"><span class="pre">list_1</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_2</span></code> (<cite>ndarray</cite>)</p></li>
+<li><p>the indexes of the points in <code class="docutils literal notranslate"><span class="pre">list_2</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_1</span></code> (<cite>ndarray</cite>)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>tuple</cite></p>
+</dd>
+</dl>
 </dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="zepyros.common.build_cone">
-<span class="sig-prename descclassname"><span class="pre">zepyros.common.</span></span><span class="sig-name descname"><span class="pre">build_cone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_disk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/common.html#build_cone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.common.build_cone" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="zepyros.common.concatenate_fig_plots">
-<span class="sig-prename descclassname"><span class="pre">zepyros.common.</span></span><span class="sig-name descname"><span class="pre">concatenate_fig_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/zepyros/common.html#concatenate_fig_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.common.concatenate_fig_plots" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="zepyros.common.log10_factorial">
@@ -288,7 +273,6 @@ from at least one point of the other list.</p>
 </div>
 </dd></dl>
 
-</section>
 </section>
 </section>
 

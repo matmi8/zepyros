@@ -7,17 +7,6 @@
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
-
-.. autoapisummary::
-
-   zepyros.zernike.Zernike3D
-   zepyros.zernike.Zernike2D
-
-
-
-
 .. py:class:: Zernike3D(n_l)
 
 

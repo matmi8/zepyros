@@ -60,9 +60,18 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#package-contents">Package Contents</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#classes">Classes</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#functions">Functions</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#attributes">Attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.Surface"><code class="docutils literal notranslate"><span class="pre">Surface</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.Zernike2D"><code class="docutils literal notranslate"><span class="pre">Zernike2D</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.Zernike3D"><code class="docutils literal notranslate"><span class="pre">Zernike3D</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.rotate_matrix"><code class="docutils literal notranslate"><span class="pre">rotate_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.rotate_patch"><code class="docutils literal notranslate"><span class="pre">rotate_patch()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.flip_matrix"><code class="docutils literal notranslate"><span class="pre">flip_matrix()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.isolate_surfaces"><code class="docutils literal notranslate"><span class="pre">isolate_surfaces()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.contact_points"><code class="docutils literal notranslate"><span class="pre">contact_points()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.log10_factorial"><code class="docutils literal notranslate"><span class="pre">log10_factorial()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.get_zernike"><code class="docutils literal notranslate"><span class="pre">get_zernike()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.plot_disk"><code class="docutils literal notranslate"><span class="pre">plot_disk()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#zepyros.plot_coeff"><code class="docutils literal notranslate"><span class="pre">plot_coeff()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -111,76 +120,6 @@
 </section>
 <section id="package-contents">
 <h2>Package Contents<a class="headerlink" href="#package-contents" title="Permalink to this heading"></a></h2>
-<section id="classes">
-<h3>Classes<a class="headerlink" href="#classes" title="Permalink to this heading"></a></h3>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.Surface" title="zepyros.Surface"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Surface</span></code></a></p></td>
-<td><p>Surface is a class that manages a set of points that form a surface;</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#zepyros.Zernike2D" title="zepyros.Zernike2D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Zernike2D</span></code></a></p></td>
-<td><p>This class performs the 2D decomposition of a figure in its Zernike descriptors</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.Zernike3D" title="zepyros.Zernike3D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Zernike3D</span></code></a></p></td>
-<td><p>This class performs the 3D decomposition of a (voxelized) shape in the Zernike</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="functions">
-<h3>Functions<a class="headerlink" href="#functions" title="Permalink to this heading"></a></h3>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.rotate_matrix" title="zepyros.rotate_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rotate_matrix</span></code></a>(cos, sin, axis)</p></td>
-<td><p>Given sine and cosine of the angle and the axis of rotation returns</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#zepyros.rotate_patch" title="zepyros.rotate_patch"><code class="xref py py-obj docutils literal notranslate"><span class="pre">rotate_patch</span></code></a>(patch, v_start, v_z, pin)</p></td>
-<td><p>Rotates a set of points by an angle defined by a given unit vector</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.flip_matrix" title="zepyros.flip_matrix"><code class="xref py py-obj docutils literal notranslate"><span class="pre">flip_matrix</span></code></a>(mat, axis)</p></td>
-<td><p>Flips a matrix based on its axis</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#zepyros.isolate_surfaces" title="zepyros.isolate_surfaces"><code class="xref py py-obj docutils literal notranslate"><span class="pre">isolate_surfaces</span></code></a>(surface[, min_d])</p></td>
-<td><p>Given a surface of x, y, z points, form groups of points that are</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.contact_points" title="zepyros.contact_points"><code class="xref py py-obj docutils literal notranslate"><span class="pre">contact_points</span></code></a>(list_1, list_2, thresh)</p></td>
-<td><p>This function finds the groups of point of list1 and list2 that have a distance lesser that thresh</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#zepyros.build_cone" title="zepyros.build_cone"><code class="xref py py-obj docutils literal notranslate"><span class="pre">build_cone</span></code></a>(z_max, n_disk)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.concatenate_fig_plots" title="zepyros.concatenate_fig_plots"><code class="xref py py-obj docutils literal notranslate"><span class="pre">concatenate_fig_plots</span></code></a>(list_)</p></td>
-<td><p></p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#zepyros.log10_factorial" title="zepyros.log10_factorial"><code class="xref py py-obj docutils literal notranslate"><span class="pre">log10_factorial</span></code></a>(n)</p></td>
-<td><p>Compute <code class="docutils literal notranslate"><span class="pre">log(n!)</span></code> with the base 10 logarithm</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.get_zernike" title="zepyros.get_zernike"><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_zernike</span></code></a>(surf, radius, ndx, order[, verso, n_pixel])</p></td>
-<td><p>Identifies a patch and calculates Zernike polynomials that characterize it</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#zepyros.plot_disk" title="zepyros.plot_disk"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_disk</span></code></a>(df_disk[, save_path])</p></td>
-<td><p>Plots 2d Zernike disk</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.plot_coeff" title="zepyros.plot_coeff"><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_coeff</span></code></a>(coeff[, save_path])</p></td>
-<td><p>Plots the zernike invariants, i.e. the absolute value of the real part</p></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="attributes">
-<h3>Attributes<a class="headerlink" href="#attributes" title="Permalink to this heading"></a></h3>
-<table class="autosummary longtable docutils align-default">
-<tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#zepyros.__version__" title="zepyros.__version__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__version__</span></code></a></p></td>
-<td><p></p></td>
-</tr>
-</tbody>
-</table>
-<dl class="py data">
-<dt class="sig sig-object py" id="zepyros.__version__">
-<span class="sig-prename descclassname"><span class="pre">zepyros.</span></span><span class="sig-name descname"><span class="pre">__version__</span></span><a class="headerlink" href="#zepyros.__version__" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py class">
 <dt class="sig sig-object py" id="zepyros.Surface">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">zepyros.</span></span><span class="sig-name descname"><span class="pre">Surface</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_num</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">r0</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">11</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">45</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">real_br</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zepyros/surface.html#Surface"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.Surface" title="Permalink to this definition"></a></dt>
@@ -630,19 +569,34 @@ to which the i-th point of the initial surface belongs</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="zepyros.contact_points">
 <span class="sig-prename descclassname"><span class="pre">zepyros.</span></span><span class="sig-name descname"><span class="pre">contact_points</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">list_2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresh</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zepyros/common.html#contact_points"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.contact_points" title="Permalink to this definition"></a></dt>
-<dd><p>This function finds the groups of point of list1 and list2 that have a distance lesser that thresh
-from at least one point of the other list.</p>
+<dd><p>Given two lists of points, find the points in each list that are closer
+than a given threshold to at least one point in the other list</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>list_1</strong> (<em>ndarray</em>) – array of points in space. If the array contains more than three columns,
+only the first three will be selected</p></li>
+<li><p><strong>list_2</strong> (<em>ndarray</em>) – array of points in space. If the array contains more than three columns,
+only the first three will be selected</p></li>
+<li><p><strong>thresh</strong> (<em>float</em>) – the minimum distance at which two points in different lists must be located
+to be considered in contact.
+The unit of measurement depends on that of the points in <code class="docutils literal notranslate"><span class="pre">list_1</span></code> and <code class="docutils literal notranslate"><span class="pre">list_2</span></code></p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>the points in <code class="docutils literal notranslate"><span class="pre">list_1</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_2</span></code> (<cite>ndarray</cite>)</p></li>
+<li><p>the points in <code class="docutils literal notranslate"><span class="pre">list_2</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_1</span></code> (<cite>ndarray</cite>)</p></li>
+<li><p>the indexes of the points in <code class="docutils literal notranslate"><span class="pre">list_1</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_2</span></code> (<cite>ndarray</cite>)</p></li>
+<li><p>the indexes of the points in <code class="docutils literal notranslate"><span class="pre">list_2</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_1</span></code> (<cite>ndarray</cite>)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><cite>tuple</cite></p>
+</dd>
+</dl>
 </dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="zepyros.build_cone">
-<span class="sig-prename descclassname"><span class="pre">zepyros.</span></span><span class="sig-name descname"><span class="pre">build_cone</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">z_max</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_disk</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zepyros/common.html#build_cone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.build_cone" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py function">
-<dt class="sig sig-object py" id="zepyros.concatenate_fig_plots">
-<span class="sig-prename descclassname"><span class="pre">zepyros.</span></span><span class="sig-name descname"><span class="pre">concatenate_fig_plots</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">list_</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zepyros/common.html#concatenate_fig_plots"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.concatenate_fig_plots" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="zepyros.log10_factorial">
@@ -738,7 +692,6 @@ of the coefficients of the polynomials</p>
 </dl>
 </dd></dl>
 
-</section>
 </section>
 </section>
 

@@ -7,18 +7,6 @@
 Module Contents
 ---------------
 
-
-Functions
-~~~~~~~~~
-
-.. autoapisummary::
-
-   zepyros.advanced.get_zernike
-   zepyros.advanced.plot_disk
-   zepyros.advanced.plot_coeff
-
-
-
 .. py:function:: get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25)
 
    Identifies a patch and calculates Zernike polynomials that characterize it

@@ -7,24 +7,6 @@
 Module Contents
 ---------------
 
-Classes
-~~~~~~~
-
-.. autoapisummary::
-
-   zepyros.surface.Surface
-
-
-
-
-Attributes
-~~~~~~~~~~
-
-.. autoapisummary::
-
-   zepyros.surface.DEB_FIND_ORIENT
-
-
 .. py:data:: DEB_FIND_ORIENT
    :value: 0
 

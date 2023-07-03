@@ -368,8 +368,29 @@
 
 <div class="viewcode-block" id="contact_points"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.common.contact_points">[docs]</a><span class="k">def</span> <span class="nf">contact_points</span><span class="p">(</span><span class="n">list_1</span><span class="p">,</span> <span class="n">list_2</span><span class="p">,</span> <span class="n">thresh</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-<span class="sd">    This function finds the groups of point of list1 and list2 that have a distance lesser that thresh</span>
-<span class="sd">    from at least one point of the other list.</span>
+<span class="sd">    Given two lists of points, find the points in each list that are closer</span>
+<span class="sd">    than a given threshold to at least one point in the other list</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    `list_1`: ndarray</span>
+<span class="sd">        array of points in space. If the array contains more than three columns,</span>
+<span class="sd">        only the first three will be selected</span>
+<span class="sd">    `list_2`: ndarray</span>
+<span class="sd">        array of points in space. If the array contains more than three columns,</span>
+<span class="sd">        only the first three will be selected</span>
+<span class="sd">    `thresh`: float</span>
+<span class="sd">        the minimum distance at which two points in different lists must be located</span>
+<span class="sd">        to be considered in contact.</span>
+<span class="sd">        The unit of measurement depends on that of the points in ``list_1`` and ``list_2``</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    `tuple`</span>
+<span class="sd">        - the points in ``list_1`` in contact with ``list_2`` (`ndarray`)</span>
+<span class="sd">        - the points in ``list_2`` in contact with ``list_1`` (`ndarray`)</span>
+<span class="sd">        - the indexes of the points in ``list_1`` in contact with ``list_2`` (`ndarray`)</span>
+<span class="sd">        - the indexes of the points in ``list_2`` in contact with ``list_1`` (`ndarray`)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="n">thresh2</span> <span class="o">=</span> <span class="n">thresh</span> <span class="o">**</span> <span class="mi">2</span>
     <span class="n">contact_1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
@@ -427,7 +448,8 @@
     <span class="k">return</span> <span class="n">contact_1</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">contact_2</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">list_index_1</span><span class="p">,</span> <span class="n">list_index_2</span></div>
 
 
-<div class="viewcode-block" id="build_cone"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.common.build_cone">[docs]</a><span class="k">def</span> <span class="nf">build_cone</span><span class="p">(</span><span class="n">z_max</span><span class="p">,</span> <span class="n">n_disk</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_build_cone</span><span class="p">(</span><span class="n">z_max</span><span class="p">,</span> <span class="n">n_disk</span><span class="p">):</span>
+    <span class="c1"># TODO: maybe deprecated? Only plot</span>
     <span class="n">dz</span> <span class="o">=</span> <span class="n">z_max</span> <span class="o">/</span> <span class="nb">float</span><span class="p">(</span><span class="n">n_disk</span><span class="p">)</span>
     <span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
 
@@ -440,11 +462,11 @@
         <span class="n">y</span> <span class="o">=</span> <span class="n">z</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">rad</span><span class="p">)</span>
 
         <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">res</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">z</span><span class="p">])])</span>
-    <span class="k">return</span> <span class="n">res</span></div>
+    <span class="k">return</span> <span class="n">res</span>
 
 
-<div class="viewcode-block" id="concatenate_fig_plots"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.common.concatenate_fig_plots">[docs]</a><span class="k">def</span> <span class="nf">concatenate_fig_plots</span><span class="p">(</span><span class="n">list_</span><span class="p">):</span>
-    <span class="c1"># TODO: add documentation</span>
+<span class="k">def</span> <span class="nf">_concatenate_fig_plots</span><span class="p">(</span><span class="n">list_</span><span class="p">):</span>
+    <span class="c1"># TODO: add documentation. Maybe deprecated?</span>
     <span class="n">l</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">list_</span><span class="p">)</span>
     <span class="n">res</span> <span class="o">=</span> <span class="n">list_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
 
@@ -458,7 +480,7 @@
             <span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">res</span><span class="p">,</span> <span class="n">list_</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
             <span class="n">n</span><span class="p">,</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">list_</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
             <span class="n">col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">col</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">col_list</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
-    <span class="k">return</span> <span class="n">res</span><span class="p">,</span> <span class="n">col</span></div>
+    <span class="k">return</span> <span class="n">res</span><span class="p">,</span> <span class="n">col</span>
 
 
 <span class="k">def</span> <span class="nf">_fix_bridge_real_bs</span><span class="p">(</span><span class="n">patch_ab</span><span class="p">,</span> <span class="n">patch_ag</span><span class="p">,</span> <span class="n">d_pp</span><span class="p">):</span>

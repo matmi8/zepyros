@@ -19,48 +19,6 @@ Submodules
 Package Contents
 ----------------
 
-Classes
-~~~~~~~
-
-.. autoapisummary::
-
-   zepyros.Surface
-   zepyros.Zernike2D
-   zepyros.Zernike3D
-
-
-
-Functions
-~~~~~~~~~
-
-.. autoapisummary::
-
-   zepyros.rotate_matrix
-   zepyros.rotate_patch
-   zepyros.flip_matrix
-   zepyros.isolate_surfaces
-   zepyros.contact_points
-   zepyros.build_cone
-   zepyros.concatenate_fig_plots
-   zepyros.log10_factorial
-   zepyros.get_zernike
-   zepyros.plot_disk
-   zepyros.plot_coeff
-
-
-
-Attributes
-~~~~~~~~~~
-
-.. autoapisummary::
-
-   zepyros.__version__
-
-
-.. py:data:: __version__
-
-   
-
 .. py:class:: Surface(surface, patch_num=5, r0=11, theta_max=45, real_br=None)
 
 
@@ -431,14 +389,27 @@ Attributes
 
 .. py:function:: contact_points(list_1, list_2, thresh)
 
-   This function finds the groups of point of list1 and list2 that have a distance lesser that thresh
-   from at least one point of the other list.
+   Given two lists of points, find the points in each list that are closer
+   than a given threshold to at least one point in the other list
 
+   :param `list_1`: array of points in space. If the array contains more than three columns,
+                    only the first three will be selected
+   :type `list_1`: ndarray
+   :param `list_2`: array of points in space. If the array contains more than three columns,
+                    only the first three will be selected
+   :type `list_2`: ndarray
+   :param `thresh`: the minimum distance at which two points in different lists must be located
+                    to be considered in contact.
+                    The unit of measurement depends on that of the points in ``list_1`` and ``list_2``
+   :type `thresh`: float
 
-.. py:function:: build_cone(z_max, n_disk)
+   :returns:
 
-
-.. py:function:: concatenate_fig_plots(list_)
+             - the points in ``list_1`` in contact with ``list_2`` (`ndarray`)
+             - the points in ``list_2`` in contact with ``list_1`` (`ndarray`)
+             - the indexes of the points in ``list_1`` in contact with ``list_2`` (`ndarray`)
+             - the indexes of the points in ``list_2`` in contact with ``list_1`` (`ndarray`)
+   :rtype: `tuple`
 
 
 .. py:function:: log10_factorial(n)
