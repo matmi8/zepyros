@@ -4,7 +4,7 @@ import numpy as np
 # import pandas as pd
 import matplotlib.pyplot as mpl
 # from scipy.spatial import distance_matrix
-from zepyros.common import isolate_surfaces, concatenate_fig_plots, build_cone, flip_matrix, rotate_patch
+from zepyros.common import isolate_surfaces, flip_matrix, rotate_patch
 
 DEB_FIND_ORIENT = 0
 
@@ -177,7 +177,7 @@ class Surface:
             mpl.plot(zz, count)
             mpl.axvline(0)
             mpl.show()
-            res, c = concatenate_fig_plots(list_=[rot_a[:, :3], rot_a[patch_mask, :3]])  # , rot_a[mask,:]])
+            # res, c = concatenate_fig_plots(list_=[rot_a[:, :3], rot_a[patch_mask, :3]])  # , rot_a[mask,:]])
 
         zz = zz[count > 0]
         check = zz > 0
@@ -321,11 +321,11 @@ class Surface:
             # looking for outer point outside
             mask = dist_in_plane > np.abs(rot[:, 2])
 
-        # plotting cone + patch
-        if check:
-            cone = build_cone(30, 50)
-            all_ = np.row_stack([cone, rot])
-            col = np.concatenate([np.ones(len(cone[:, 0]))*-10, np.ones(len(rot[:, 0]))*10])
+        # # plotting cone + patch
+        # if check:
+        #     cone = build_cone(30, 50)
+        #     all_ = np.row_stack([cone, rot])
+        #     col = np.concatenate([np.ones(len(cone[:, 0]))*-10, np.ones(len(rot[:, 0]))*10])
 
         # find new center of the patch, corresponding to find the overall z shift
         new_cm = np.mean(rot[:, :3], axis=0)
@@ -504,9 +504,10 @@ class Surface:
         mean_v = np.mean(patch_points[:, 3:6], axis=0)
         pin = np.mean(patch_points[:, :3], axis=0)
     
-        res, c11 = concatenate_fig_plots(list_=[patch_points[:, :3], patch_points[:, :3] + patch_points[:, 3:6]])
-
-        phi, rot_patch_all = rotate_patch(res[:, :3], mean_v, verso, pin)
+        # res, c11 = concatenate_fig_plots(list_=[patch_points[:, :3], patch_points[:, :3] + patch_points[:, 3:6]])
+        #
+        # phi, rot_patch_all = rotate_patch(res[:, :3], mean_v, verso, pin)
+        phi, rot_patch_all = rotate_patch(patch_points[:, :3], mean_v, verso, pin)
     
         rot_patch = rot_patch_all[:ll, :3]
         rot_normal_vec = rot_patch_all[ll:, :3] - rot_patch
