@@ -23,8 +23,7 @@ extensions = [
     "sphinx.ext.viewcode",
 ]
 autoapi_dirs = ["../src"]
-autoapi_options = ['members', 'undoc-members', 'show-inheritance', 'show-module-summary', 'special-members',
-                   'imported-members', ]
+autoapi_options = ['members', 'undoc-members', 'show-inheritance', 'imported-members', ]
 # autoapi_member_order = 'groupwise'
 # autoapi_python_class_content = 'both'
 
@@ -41,3 +40,4 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 # a list of builtin themes.
 #
 html_theme = "sphinx_rtd_theme"
+html_show_sphinx = False

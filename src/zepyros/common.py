@@ -291,8 +291,29 @@ def _find_border(new_plane_ab):
 
 def contact_points(list_1, list_2, thresh):
     """
-    This function finds the groups of point of list1 and list2 that have a distance lesser that thresh
-    from at least one point of the other list.
+    Given two lists of points, find the points in each list that are closer
+    than a given threshold to at least one point in the other list
+
+    Parameters
+    ----------
+    `list_1`: ndarray
+        array of points in space. If the array contains more than three columns,
+        only the first three will be selected
+    `list_2`: ndarray
+        array of points in space. If the array contains more than three columns,
+        only the first three will be selected
+    `thresh`: float
+        the minimum distance at which two points in different lists must be located
+        to be considered in contact.
+        The unit of measurement depends on that of the points in ``list_1`` and ``list_2``
+
+    Return
+    ------
+    `tuple`
+        - the points in ``list_1`` in contact with ``list_2`` (`ndarray`)
+        - the points in ``list_2`` in contact with ``list_1`` (`ndarray`)
+        - the indexes of the points in ``list_1`` in contact with ``list_2`` (`ndarray`)
+        - the indexes of the points in ``list_2`` in contact with ``list_1`` (`ndarray`)
     """
     thresh2 = thresh ** 2
     contact_1 = [0, 0, 0, 0]
@@ -350,7 +371,8 @@ def contact_points(list_1, list_2, thresh):
     return contact_1[1:, :], contact_2[1:, :], list_index_1, list_index_2
 
 
-def build_cone(z_max, n_disk):
+def _build_cone(z_max, n_disk):
+    # TODO: maybe deprecated? Only plot
     dz = z_max / float(n_disk)
     z = 0
 
@@ -366,8 +388,8 @@ def build_cone(z_max, n_disk):
     return res
 
 
-def concatenate_fig_plots(list_):
-    # TODO: add documentation
+def _concatenate_fig_plots(list_):
+    # TODO: add documentation. Maybe deprecated?
     l = len(list_)
     res = list_[0]
 
