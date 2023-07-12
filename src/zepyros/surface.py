@@ -507,7 +507,8 @@ class Surface:
         # res, c11 = concatenate_fig_plots(list_=[patch_points[:, :3], patch_points[:, :3] + patch_points[:, 3:6]])
         #
         # phi, rot_patch_all = rotate_patch(res[:, :3], mean_v, verso, pin)
-        phi, rot_patch_all = rotate_patch(patch_points[:, :3], mean_v, verso, pin)
+        res = np.vstack([patch_points[:, :3], patch_points[:, :3] + patch_points[:, 3:6]])
+        phi, rot_patch_all = rotate_patch(res[:, :3], mean_v, verso, pin)
     
         rot_patch = rot_patch_all[:ll, :3]
         rot_normal_vec = rot_patch_all[ll:, :3] - rot_patch
