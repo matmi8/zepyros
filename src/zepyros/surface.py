@@ -138,16 +138,6 @@ class Surface:
 
         return patch_points__, new_mask
 
-    def build_patch_no_is(self, point_pos, d_min):
-        # TODO: add documentation. Remove unused d_min param. Probably deprecated
-        d2 = (self.surface[:, 0] - self.surface[point_pos, 0])**2 + (self.surface[:, 1] - self.surface[point_pos, 1])**2 + (self.surface[:, 2] - self.surface[point_pos, 2])**2
-
-        # mask = self.distance_matrix[point_pos, :] <= self.r0
-        mask = d2 <= self.r0**2
-        patch_points = self.surface[mask, :]
-
-        return patch_points, mask
-
     def find_patch_orientation(self, rot_protein, patch_mask):
         # TODO: add documentation
         rot_a = rot_protein.copy()
@@ -459,8 +449,8 @@ class Surface:
 
                 if r_mat[x, y] < r2:
                     if(
-                        (plane[x+1, y+1] !=0 and plane[x-1, y-1] != 0) or
-                        (plane[x-1, y+1] !=0 and plane[x+1,y-1] != 0)
+                        (plane[x+1, y+1] != 0 and plane[x-1, y-1] != 0) or
+                        (plane[x-1, y+1] != 0 and plane[x+1, y-1] != 0)
                     ):
                         tmp = plane[x_ + x, y_ + y]
 
