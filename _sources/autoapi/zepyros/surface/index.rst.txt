@@ -79,9 +79,6 @@ Module Contents
       :rtype: `tuple`
 
 
-   .. py:method:: build_patch_no_is(point_pos, d_min)
-
-
    .. py:method:: find_patch_orientation(rot_protein, patch_mask)
 
 

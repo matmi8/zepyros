@@ -125,8 +125,6 @@ Module Contents
 
              - the points in ``list_1`` in contact with ``list_2`` (`ndarray`)
              - the points in ``list_2`` in contact with ``list_1`` (`ndarray`)
-             - the indexes of the points in ``list_1`` in contact with ``list_2`` (`ndarray`)
-             - the indexes of the points in ``list_2`` in contact with ``list_1`` (`ndarray`)
    :rtype: `tuple`
 
 

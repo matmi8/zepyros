@@ -7,7 +7,7 @@
 Module Contents
 ---------------
 
-.. py:function:: get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25)
+.. py:function:: get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25, zernike_obj=None)
 
    Identifies a patch and calculates Zernike polynomials that characterize it
 
@@ -31,6 +31,7 @@ Module Contents
              - polynomial coefficients (`ndarray`)
              - Zernike 2d disk data (`ndarray`)
              - the indices of the surface points belonging to the patch (`array`)
+             - the initialized Zernike2D class (`class`)
    :rtype: `tuple`
 
 

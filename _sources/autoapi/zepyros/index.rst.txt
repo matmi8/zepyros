@@ -86,9 +86,6 @@ Package Contents
       :rtype: `tuple`
 
 
-   .. py:method:: build_patch_no_is(point_pos, d_min)
-
-
    .. py:method:: find_patch_orientation(rot_protein, patch_mask)
 
 
@@ -407,8 +404,6 @@ Package Contents
 
              - the points in ``list_1`` in contact with ``list_2`` (`ndarray`)
              - the points in ``list_2`` in contact with ``list_1`` (`ndarray`)
-             - the indexes of the points in ``list_1`` in contact with ``list_2`` (`ndarray`)
-             - the indexes of the points in ``list_2`` in contact with ``list_1`` (`ndarray`)
    :rtype: `tuple`
 
 
@@ -428,7 +423,7 @@ Package Contents
    6.559763032876794
 
 
-.. py:function:: get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25)
+.. py:function:: get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25, zernike_obj=None)
 
    Identifies a patch and calculates Zernike polynomials that characterize it
 
@@ -452,6 +447,7 @@ Package Contents
              - polynomial coefficients (`ndarray`)
              - Zernike 2d disk data (`ndarray`)
              - the indices of the surface points belonging to the patch (`array`)
+             - the initialized Zernike2D class (`class`)
    :rtype: `tuple`
 
 

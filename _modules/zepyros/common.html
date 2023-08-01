@@ -388,6 +388,76 @@
 <span class="sd">    `tuple`</span>
 <span class="sd">        - the points in ``list_1`` in contact with ``list_2`` (`ndarray`)</span>
 <span class="sd">        - the points in ``list_2`` in contact with ``list_1`` (`ndarray`)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">thresh2</span> <span class="o">=</span> <span class="n">thresh</span> <span class="o">**</span> <span class="mi">2</span>
+    <span class="n">contact_1</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">contact_2</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+    <span class="n">l1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">list_1</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="c1"># l2 = np.shape(list_2)[0]</span>
+
+    <span class="n">mmm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">Progress </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">l1</span><span class="p">))</span>
+        <span class="n">d2</span> <span class="o">=</span> <span class="p">(</span><span class="n">list_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">list_2</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">list_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">list_2</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span>
+                    <span class="n">list_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">list_2</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">mask</span> <span class="o">=</span> <span class="n">d2</span> <span class="o">&lt;</span> <span class="n">thresh2</span>
+
+        <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">mask</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">mmm</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">list_1</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]</span>
+            <span class="n">mmm</span><span class="p">[</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">d2</span><span class="p">[</span><span class="n">mask</span><span class="p">])</span>
+
+            <span class="n">contact_1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">contact_1</span><span class="p">,</span> <span class="n">mmm</span><span class="p">])</span>
+            <span class="n">contact_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">contact_2</span><span class="p">,</span> <span class="n">list_2</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="p">:</span><span class="mi">3</span><span class="p">]])</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">contact_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">contact_2</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">except</span><span class="p">:</span>
+        <span class="n">aaa</span> <span class="o">=</span> <span class="n">contact_2</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+        <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">aaa</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">output</span><span class="p">:</span>
+                <span class="n">output</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">output</span><span class="p">,</span> <span class="n">x</span><span class="p">])</span>
+        <span class="n">contact_2</span> <span class="o">=</span> <span class="n">output</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+    <span class="n">l1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">contact_2</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+    <span class="n">mmm</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l1</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stderr</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\r</span><span class="s2">Progress </span><span class="si">%d</span><span class="s2"> / </span><span class="si">%d</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">l1</span><span class="p">))</span>
+        <span class="n">d2</span> <span class="o">=</span> <span class="p">(</span><span class="n">list_1</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">contact_2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span><span class="n">list_1</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">contact_2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="o">+</span> <span class="p">(</span>
+                    <span class="n">list_1</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">contact_2</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span>
+        <span class="n">mmm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">d2</span><span class="p">))</span>
+    <span class="n">contact_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">contact_2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mmm</span><span class="p">)])</span>
+
+    <span class="k">return</span> <span class="n">contact_1</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">contact_2</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:]</span></div>
+
+
+<span class="k">def</span> <span class="nf">_contact_points</span><span class="p">(</span><span class="n">list_1</span><span class="p">,</span> <span class="n">list_2</span><span class="p">,</span> <span class="n">thresh</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Given two lists of points, find the points in each list that are closer</span>
+<span class="sd">    than a given threshold to at least one point in the other list</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    `list_1`: ndarray</span>
+<span class="sd">        array of points in space. If the array contains more than three columns,</span>
+<span class="sd">        only the first three will be selected</span>
+<span class="sd">    `list_2`: ndarray</span>
+<span class="sd">        array of points in space. If the array contains more than three columns,</span>
+<span class="sd">        only the first three will be selected</span>
+<span class="sd">    `thresh`: float</span>
+<span class="sd">        the minimum distance at which two points in different lists must be located</span>
+<span class="sd">        to be considered in contact.</span>
+<span class="sd">        The unit of measurement depends on that of the points in ``list_1`` and ``list_2``</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    `tuple`</span>
+<span class="sd">        - the points in ``list_1`` in contact with ``list_2`` (`ndarray`)</span>
+<span class="sd">        - the points in ``list_2`` in contact with ``list_1`` (`ndarray`)</span>
 <span class="sd">        - the indexes of the points in ``list_1`` in contact with ``list_2`` (`ndarray`)</span>
 <span class="sd">        - the indexes of the points in ``list_2`` in contact with ``list_1`` (`ndarray`)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
@@ -444,7 +514,7 @@
         <span class="n">mmm</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">d2</span><span class="p">))</span>
     <span class="n">contact_2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">column_stack</span><span class="p">([</span><span class="n">contact_2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">mmm</span><span class="p">)])</span>
 
-    <span class="k">return</span> <span class="n">contact_1</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">contact_2</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">list_index_1</span><span class="p">,</span> <span class="n">list_index_2</span></div>
+    <span class="k">return</span> <span class="n">contact_1</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">contact_2</span><span class="p">[</span><span class="mi">1</span><span class="p">:,</span> <span class="p">:],</span> <span class="n">list_index_1</span><span class="p">,</span> <span class="n">list_index_2</span>
 
 
 <span class="k">def</span> <span class="nf">_build_cone</span><span class="p">(</span><span class="n">z_max</span><span class="p">,</span> <span class="n">n_disk</span><span class="p">):</span>
@@ -482,83 +552,76 @@
     <span class="k">return</span> <span class="n">res</span><span class="p">,</span> <span class="n">col</span>
 
 
-<span class="k">def</span> <span class="nf">_fix_bridge_real_bs</span><span class="p">(</span><span class="n">patch_ab</span><span class="p">,</span> <span class="n">patch_ag</span><span class="p">,</span> <span class="n">d_pp</span><span class="p">):</span>
+<span class="k">def</span> <span class="nf">_fix_bridge_real_bs</span><span class="p">(</span><span class="n">patch_template</span><span class="p">,</span> <span class="n">patch_target</span><span class="p">,</span> <span class="n">d_pp</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    This function isolates the different groups of points in two given sets (patches)</span>
 <span class="sd">    according to a cutoff distance Dpp.</span>
 <span class="sd">    It associates each group to the closest group of the other set and returns</span>
 <span class="sd">    a list of matched patches.</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="c1"># TODO: add documentation. Maybe deprecated?</span>
+    <span class="c1"># TODO: add documentation.</span>
     <span class="c1"># processing  patches to remove islands</span>
-    <span class="c1"># ab</span>
-    <span class="n">index_ab_bd_</span> <span class="o">=</span> <span class="n">isolate_surfaces</span><span class="p">(</span><span class="n">patch_ab</span><span class="p">,</span> <span class="n">d_pp</span><span class="p">)</span>
+    <span class="c1"># template</span>
+    <span class="n">index_template_bd_</span> <span class="o">=</span> <span class="n">isolate_surfaces</span><span class="p">(</span><span class="n">patch_template</span><span class="p">,</span> <span class="n">d_pp</span><span class="p">)</span>
+    <span class="n">val_template</span><span class="p">,</span> <span class="n">counts_template</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">index_template_bd_</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="n">val_ab</span><span class="p">,</span> <span class="n">counts_ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">index_ab_bd_</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="n">val_ab</span><span class="p">,</span> <span class="s2">&quot;counts&quot;</span><span class="p">,</span> <span class="n">counts_ab</span><span class="p">)</span>
+    <span class="c1"># target</span>
+    <span class="n">index_target_bd_</span> <span class="o">=</span> <span class="n">isolate_surfaces</span><span class="p">(</span><span class="n">patch_target</span><span class="p">,</span> <span class="n">d_pp</span><span class="p">)</span>
+    <span class="n">val_target</span><span class="p">,</span> <span class="n">counts_target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">index_target_bd_</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
-    <span class="c1"># ag</span>
-    <span class="n">index_ag_bd_</span> <span class="o">=</span> <span class="n">isolate_surfaces</span><span class="p">(</span><span class="n">patch_ag</span><span class="p">,</span> <span class="n">d_pp</span><span class="p">)</span>
+    <span class="c1"># creating matrix of number of points in each group and label returned by isolate_surface func</span>
+    <span class="c1"># columns are ordered from the biggest to the smallest patch.</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">counts_template</span><span class="p">,</span> <span class="n">val_template</span><span class="p">])</span>
+    <span class="n">s_c_template</span> <span class="o">=</span> <span class="n">flip_matrix</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="n">val_ag</span><span class="p">,</span> <span class="n">counts_ag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">index_ag_bd_</span><span class="p">,</span> <span class="n">return_counts</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;val&quot;</span><span class="p">,</span> <span class="n">val_ag</span><span class="p">,</span> <span class="s2">&quot;counts&quot;</span><span class="p">,</span> <span class="n">counts_ag</span><span class="p">)</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">counts_target</span><span class="p">,</span> <span class="n">val_target</span><span class="p">])</span>
+    <span class="n">s_c_target</span> <span class="o">=</span> <span class="n">flip_matrix</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
 
-    <span class="c1"># creating matrix of number of points in each group and label returned by IsolateSurface func.</span>
-    <span class="c1"># Columns are ordered from the biggest to the smallest patch.</span>
-    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">counts_ab</span><span class="p">,</span> <span class="n">val_ab</span><span class="p">])</span>
+    <span class="c1"># finding center of mass of each group</span>
+    <span class="n">cm_template</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">cm_target</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">el1</span> <span class="ow">in</span> <span class="n">s_c_template</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]:</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">patch_template</span><span class="p">[</span><span class="n">index_template_bd_</span> <span class="o">==</span> <span class="n">el1</span><span class="p">]</span>
+        <span class="n">cm_template</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">el2</span> <span class="ow">in</span> <span class="n">s_c_target</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]:</span>
+        <span class="n">tmp</span> <span class="o">=</span> <span class="n">patch_target</span><span class="p">[</span><span class="n">index_target_bd_</span> <span class="o">==</span> <span class="n">el2</span><span class="p">]</span>
+        <span class="n">cm_target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
 
-    <span class="c1"># s_c_ab = np.flip(tmp[:, np.argsort(tmp[0, :])], axis=1)</span>
-    <span class="n">s_c_ab</span> <span class="o">=</span> <span class="n">flip_matrix</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">l_template</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">s_c_template</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
+    <span class="n">l_target</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">s_c_target</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
 
-    <span class="n">tmp</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">([</span><span class="n">counts_ag</span><span class="p">,</span> <span class="n">val_ag</span><span class="p">])</span>
+    <span class="c1"># computing distance matrix between the centers of the groups intra sets</span>
+    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">l_template</span><span class="p">,</span> <span class="n">l_target</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_template</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_target</span><span class="p">):</span>
+            <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cm_template</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cm_target</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
 
-    <span class="n">s_c_ag</span> <span class="o">=</span> <span class="n">flip_matrix</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">tmp</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="p">:])],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-    <span class="c1"># finding center of mass of each group...</span>
-    <span class="n">cm_ab</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">cm_ag</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">s_c_ab</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]:</span>
-        <span class="n">tmp</span> <span class="o">=</span> <span class="n">patch_ab</span><span class="p">[</span><span class="n">index_ab_bd_</span> <span class="o">==</span> <span class="n">l</span><span class="p">]</span>
-        <span class="n">cm_ab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">l</span> <span class="ow">in</span> <span class="n">s_c_ag</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">:]:</span>
-        <span class="n">tmp</span> <span class="o">=</span> <span class="n">patch_ag</span><span class="p">[</span><span class="n">index_ag_bd_</span> <span class="o">==</span> <span class="n">l</span><span class="p">]</span>
-        <span class="n">cm_ag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">tmp</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">3</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
-
-    <span class="n">l_ag</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">s_c_ag</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-    <span class="n">l_ab</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">shape</span><span class="p">(</span><span class="n">s_c_ab</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span>
-
-    <span class="c1"># computing distance matrix between the centers of the groups intra sets...</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">l_ab</span><span class="p">,</span> <span class="n">l_ag</span><span class="p">))</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_ab</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_ag</span><span class="p">):</span>
-            <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cm_ab</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">cm_ag</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
-
-    <span class="c1"># associating groups according to the minimal distance...</span>
-    <span class="n">index_ab</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">index_ag</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">l_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="n">l_ag</span><span class="p">,</span> <span class="n">l_ab</span><span class="p">])</span>
+    <span class="c1"># associating groups according to the minimal distance</span>
+    <span class="n">index_template</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">index_target</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">l_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">([</span><span class="n">l_target</span><span class="p">,</span> <span class="n">l_template</span><span class="p">])</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_min</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">l_min</span> <span class="o">==</span> <span class="n">l_ab</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">l_min</span> <span class="o">==</span> <span class="n">l_template</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="p">:]))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">index_ab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
-            <span class="n">index_ag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">index_template</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">index_target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
         <span class="k">else</span><span class="p">:</span>
             <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">d</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">d</span><span class="p">[:,</span> <span class="n">i</span><span class="p">]))[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-            <span class="n">index_ab</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-            <span class="n">index_ag</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+            <span class="n">index_template</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+            <span class="n">index_target</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
 
-    <span class="n">patch_ab_list</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">patch_ag_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">patch_template_list</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">patch_target_list</span> <span class="o">=</span> <span class="p">[]</span>
 
-    <span class="n">lab_ab</span> <span class="o">=</span> <span class="n">s_c_ab</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">index_ab</span><span class="p">]</span>
-    <span class="n">lab_ag</span> <span class="o">=</span> <span class="n">s_c_ag</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">index_ag</span><span class="p">]</span>
+    <span class="n">lab_template</span> <span class="o">=</span> <span class="n">s_c_template</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">index_template</span><span class="p">]</span>
+    <span class="n">lab_target</span> <span class="o">=</span> <span class="n">s_c_target</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="n">index_target</span><span class="p">]</span>
 
     <span class="c1"># defining list of matched patches</span>
     <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">l_min</span><span class="p">):</span>
-        <span class="n">patch_ab_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">patch_ab</span><span class="p">[</span><span class="n">index_ab_bd_</span> <span class="o">==</span> <span class="n">lab_ab</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
-        <span class="n">patch_ag_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">patch_ag</span><span class="p">[</span><span class="n">index_ag_bd_</span> <span class="o">==</span> <span class="n">lab_ag</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+        <span class="n">patch_template_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">patch_template</span><span class="p">[</span><span class="n">index_template_bd_</span> <span class="o">==</span> <span class="n">lab_template</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
+        <span class="n">patch_target_list</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">patch_target</span><span class="p">[</span><span class="n">index_target_bd_</span> <span class="o">==</span> <span class="n">lab_target</span><span class="p">[</span><span class="n">i</span><span class="p">]])</span>
 
-    <span class="k">return</span> <span class="n">patch_ab_list</span><span class="p">,</span> <span class="n">patch_ag_list</span>
+    <span class="k">return</span> <span class="n">patch_template_list</span><span class="p">,</span> <span class="n">patch_target_list</span>
 
 
 <span class="k">def</span> <span class="nf">_isolate_isosurface</span><span class="p">(</span><span class="n">my_prot</span><span class="p">,</span> <span class="n">min_v</span><span class="p">,</span> <span class="n">max_v</span><span class="p">):</span>

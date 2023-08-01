@@ -86,7 +86,7 @@
 <span class="n">mpl</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;Agg&#39;</span><span class="p">)</span>
 
 
-<div class="viewcode-block" id="get_zernike"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.advanced.get_zernike">[docs]</a><span class="k">def</span> <span class="nf">get_zernike</span><span class="p">(</span><span class="n">surf</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">ndx</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">verso</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_pixel</span><span class="o">=</span><span class="mi">25</span><span class="p">):</span>
+<div class="viewcode-block" id="get_zernike"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.advanced.get_zernike">[docs]</a><span class="k">def</span> <span class="nf">get_zernike</span><span class="p">(</span><span class="n">surf</span><span class="p">,</span> <span class="n">radius</span><span class="p">,</span> <span class="n">ndx</span><span class="p">,</span> <span class="n">order</span><span class="p">,</span> <span class="n">verso</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_pixel</span><span class="o">=</span><span class="mi">25</span><span class="p">,</span> <span class="n">zernike_obj</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
 <span class="sd">    Identifies a patch and calculates Zernike polynomials that characterize it</span>
 
@@ -113,6 +113,7 @@
 <span class="sd">        - polynomial coefficients (`ndarray`)</span>
 <span class="sd">        - Zernike 2d disk data (`ndarray`)</span>
 <span class="sd">        - the indices of the surface points belonging to the patch (`array`)</span>
+<span class="sd">        - the initialized Zernike2D class (`class`)</span>
 <span class="sd">    &quot;&quot;&quot;</span>
     <span class="c1"># TODO: passi già la superficie come deve essere</span>
     <span class="c1"># lag = len(surf[&quot;x&quot;])</span>
@@ -129,7 +130,7 @@
     <span class="n">patch</span><span class="p">,</span> <span class="n">mask</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">build_patch</span><span class="p">(</span><span class="n">point_ndx</span><span class="o">=</span><span class="n">ndx</span><span class="p">,</span> <span class="n">d_min</span><span class="o">=</span><span class="mf">.5</span><span class="p">)</span>
     <span class="n">surf_obj</span><span class="o">.</span><span class="n">real_br</span> <span class="o">=</span> <span class="n">mask</span>
 
-    <span class="n">rot_patch</span><span class="p">,</span> <span class="n">rot_ag_patch_nv</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">patch_reorient</span><span class="p">(</span><span class="n">patch</span><span class="p">,</span> <span class="n">verso</span><span class="p">)</span>
+    <span class="n">rot_patch</span><span class="p">,</span> <span class="n">rot_patch_nv</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">patch_reorient</span><span class="p">(</span><span class="n">patch</span><span class="p">,</span> <span class="n">verso</span><span class="p">)</span>
     <span class="n">z</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">find_origin</span><span class="p">(</span><span class="n">rot_patch</span><span class="p">)</span>
     <span class="n">plane</span><span class="p">,</span> <span class="n">weights</span><span class="p">,</span> <span class="n">dist_plane</span><span class="p">,</span> <span class="n">thetas</span> <span class="o">=</span> <span class="n">surf_obj</span><span class="o">.</span><span class="n">create_plane</span><span class="p">(</span><span class="n">patch</span><span class="o">=</span><span class="n">rot_patch</span><span class="p">,</span> <span class="n">z_c</span><span class="o">=</span><span class="n">z</span><span class="p">,</span> <span class="n">n_p</span><span class="o">=</span><span class="n">n_pixel</span><span class="p">)</span>
 
@@ -147,8 +148,11 @@
     <span class="c1">#     zernike_env.img = new_plane_</span>
     <span class="c1"># except:</span>
     <span class="c1">#     zernike_env = zf.Zernike2D(new_plane_)</span>
-
-    <span class="n">zernike_env</span> <span class="o">=</span> <span class="n">zf</span><span class="o">.</span><span class="n">Zernike2D</span><span class="p">(</span><span class="n">new_plane_</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">zernike_obj</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">zernike_env</span> <span class="o">=</span> <span class="n">zf</span><span class="o">.</span><span class="n">Zernike2D</span><span class="p">(</span><span class="n">new_plane_</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">zernike_env</span> <span class="o">=</span> <span class="n">zernike_obj</span>
+        <span class="n">zernike_env</span><span class="o">.</span><span class="n">img</span> <span class="o">=</span> <span class="n">new_plane_</span>
     <span class="n">br_coeff</span> <span class="o">=</span> <span class="n">zernike_env</span><span class="o">.</span><span class="n">zernike_decomposition</span><span class="p">(</span><span class="n">order</span><span class="o">=</span><span class="nb">int</span><span class="p">(</span><span class="n">order</span><span class="p">))</span>
     <span class="n">disk_data</span> <span class="o">=</span> <span class="n">zernike_env</span><span class="o">.</span><span class="n">img</span>
     <span class="n">reduced_disk</span> <span class="o">=</span> <span class="n">disk_data</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ix_</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">16</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">400</span><span class="p">,</span> <span class="mi">16</span><span class="p">))]</span>
@@ -156,7 +160,7 @@
     <span class="n">df_disk</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">reduced_disk</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="s1">&#39;index&#39;</span><span class="p">)</span>
     <span class="n">df_disk</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;row&#39;</span><span class="p">,</span> <span class="s1">&#39;column&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="p">]</span>
 
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">br_coeff</span><span class="p">),</span> <span class="n">df_disk</span><span class="p">,</span> <span class="n">mask</span></div>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">absolute</span><span class="p">(</span><span class="n">br_coeff</span><span class="p">),</span> <span class="n">df_disk</span><span class="p">,</span> <span class="n">mask</span><span class="p">,</span> <span class="n">zernike_env</span></div>
 
 
 <div class="viewcode-block" id="plot_disk"><a class="viewcode-back" href="../../autoapi/zepyros/index.html#zepyros.advanced.plot_disk">[docs]</a><span class="k">def</span> <span class="nf">plot_disk</span><span class="p">(</span><span class="n">df_disk</span><span class="p">,</span> <span class="n">save_path</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>

@@ -199,11 +199,6 @@ threshold distance from the point</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="zepyros.Surface.build_patch_no_is">
-<span class="sig-name descname"><span class="pre">build_patch_no_is</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">point_pos</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">d_min</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zepyros/surface.html#Surface.build_patch_no_is"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.Surface.build_patch_no_is" title="Permalink to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="zepyros.Surface.find_patch_orientation">
 <span class="sig-name descname"><span class="pre">find_patch_orientation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rot_protein</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patch_mask</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zepyros/surface.html#Surface.find_patch_orientation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.Surface.find_patch_orientation" title="Permalink to this definition"></a></dt>
 <dd></dd></dl>
@@ -586,8 +581,6 @@ The unit of measurement depends on that of the points in <code class="docutils l
 <dd class="field-even"><p><ul class="simple">
 <li><p>the points in <code class="docutils literal notranslate"><span class="pre">list_1</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_2</span></code> (<cite>ndarray</cite>)</p></li>
 <li><p>the points in <code class="docutils literal notranslate"><span class="pre">list_2</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_1</span></code> (<cite>ndarray</cite>)</p></li>
-<li><p>the indexes of the points in <code class="docutils literal notranslate"><span class="pre">list_1</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_2</span></code> (<cite>ndarray</cite>)</p></li>
-<li><p>the indexes of the points in <code class="docutils literal notranslate"><span class="pre">list_2</span></code> in contact with <code class="docutils literal notranslate"><span class="pre">list_1</span></code> (<cite>ndarray</cite>)</p></li>
 </ul>
 </p>
 </dd>
@@ -621,7 +614,7 @@ The unit of measurement depends on that of the points in <code class="docutils l
 
 <dl class="py function">
 <dt class="sig sig-object py" id="zepyros.get_zernike">
-<span class="sig-prename descclassname"><span class="pre">zepyros.</span></span><span class="sig-name descname"><span class="pre">get_zernike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verso</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_pixel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zepyros/advanced.html#get_zernike"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.get_zernike" title="Permalink to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">zepyros.</span></span><span class="sig-name descname"><span class="pre">get_zernike</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surf</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">radius</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ndx</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">order</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verso</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">n_pixel</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zernike_obj</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/zepyros/advanced.html#get_zernike"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#zepyros.get_zernike" title="Permalink to this definition"></a></dt>
 <dd><p>Identifies a patch and calculates Zernike polynomials that characterize it</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -641,6 +634,7 @@ and <code class="docutils literal notranslate"><span class="pre">nx</span></code
 <li><p>polynomial coefficients (<cite>ndarray</cite>)</p></li>
 <li><p>Zernike 2d disk data (<cite>ndarray</cite>)</p></li>
 <li><p>the indices of the surface points belonging to the patch (<cite>array</cite>)</p></li>
+<li><p>the initialized Zernike2D class (<cite>class</cite>)</p></li>
 </ul>
 </p>
 </dd>
