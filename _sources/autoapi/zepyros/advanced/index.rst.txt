@@ -25,6 +25,8 @@ Module Contents
    :type `verso`: int
    :param `n_pixel`: number of pixels per side with which the patch will be reconstructed (default: ``25``)
    :type `n_pixel`: int
+   :param `zernike_obj`: Zernike2D class object already initialized (default ``None``
+   :type `zernike_obj`: class
 
    :returns:
 
