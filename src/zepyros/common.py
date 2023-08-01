@@ -312,6 +312,76 @@ def contact_points(list_1, list_2, thresh):
     `tuple`
         - the points in ``list_1`` in contact with ``list_2`` (`ndarray`)
         - the points in ``list_2`` in contact with ``list_1`` (`ndarray`)
+    """
+
+    thresh2 = thresh ** 2
+    contact_1 = [0, 0, 0, 0]
+    contact_2 = [0, 0, 0]
+    l1 = np.shape(list_1)[0]
+    # l2 = np.shape(list_2)[0]
+
+    mmm = np.zeros(4)
+
+    for i in range(l1):
+        if i % 1000 == 0:
+            sys.stderr.write("\rProgress %d / %d" % (i, l1))
+        d2 = (list_1[i, 0] - list_2[:, 0])**2 + (list_1[i, 1] - list_2[:, 1])**2 + (
+                    list_1[i, 2] - list_2[:, 2])**2
+        mask = d2 < thresh2
+
+        if np.sum(mask) > 0:
+            mmm[:3] = list_1[i, :3]
+            mmm[3] = np.min(d2[mask])
+
+            contact_1 = np.row_stack([contact_1, mmm])
+            contact_2 = np.row_stack([contact_2, list_2[mask, :3]])
+
+    try:
+        contact_2 = np.unique(contact_2, axis=0)
+    except:
+        aaa = contact_2.tolist()
+        output = [0, 0, 0]
+        for x in aaa:
+            if x not in output:
+                output = np.row_stack([output, x])
+        contact_2 = output.copy()
+
+    l1 = np.shape(contact_2)[0]
+    mmm = []
+    for i in range(l1):
+        if i % 1000 == 0:
+            sys.stderr.write("\rProgress %d / %d" % (i, l1))
+        d2 = (list_1[:, 0] - contact_2[i, 0])**2 + (list_1[:, 1] - contact_2[i, 1])**2 + (
+                    list_1[:, 2] - contact_2[i, 2])**2
+        mmm.append(np.min(d2))
+    contact_2 = np.column_stack([contact_2, np.array(mmm)])
+
+    return contact_1[1:, :], contact_2[1:, :]
+
+
+def _contact_points(list_1, list_2, thresh):
+    """
+    Given two lists of points, find the points in each list that are closer
+    than a given threshold to at least one point in the other list
+
+    Parameters
+    ----------
+    `list_1`: ndarray
+        array of points in space. If the array contains more than three columns,
+        only the first three will be selected
+    `list_2`: ndarray
+        array of points in space. If the array contains more than three columns,
+        only the first three will be selected
+    `thresh`: float
+        the minimum distance at which two points in different lists must be located
+        to be considered in contact.
+        The unit of measurement depends on that of the points in ``list_1`` and ``list_2``
+
+    Return
+    ------
+    `tuple`
+        - the points in ``list_1`` in contact with ``list_2`` (`ndarray`)
+        - the points in ``list_2`` in contact with ``list_1`` (`ndarray`)
         - the indexes of the points in ``list_1`` in contact with ``list_2`` (`ndarray`)
         - the indexes of the points in ``list_2`` in contact with ``list_1`` (`ndarray`)
     """
@@ -406,83 +476,76 @@ def _concatenate_fig_plots(list_):
     return res, col
 
 
-def _fix_bridge_real_bs(patch_ab, patch_ag, d_pp):
+def _fix_bridge_real_bs(patch_template, patch_target, d_pp):
     """
     This function isolates the different groups of points in two given sets (patches)
     according to a cutoff distance Dpp.
     It associates each group to the closest group of the other set and returns
     a list of matched patches.
     """
-    # TODO: add documentation. Maybe deprecated?
+    # TODO: add documentation.
     # processing  patches to remove islands
-    # ab
-    index_ab_bd_ = isolate_surfaces(patch_ab, d_pp)
+    # template
+    index_template_bd_ = isolate_surfaces(patch_template, d_pp)
+    val_template, counts_template = np.unique(index_template_bd_, return_counts=True)
 
-    val_ab, counts_ab = np.unique(index_ab_bd_, return_counts=True)
-    print("val", val_ab, "counts", counts_ab)
+    # target
+    index_target_bd_ = isolate_surfaces(patch_target, d_pp)
+    val_target, counts_target = np.unique(index_target_bd_, return_counts=True)
 
-    # ag
-    index_ag_bd_ = isolate_surfaces(patch_ag, d_pp)
+    # creating matrix of number of points in each group and label returned by isolate_surface func
+    # columns are ordered from the biggest to the smallest patch.
+    tmp = np.row_stack([counts_template, val_template])
+    s_c_template = flip_matrix(tmp[:, np.argsort(tmp[0, :])], axis=1)
 
-    val_ag, counts_ag = np.unique(index_ag_bd_, return_counts=True)
-    print("val", val_ag, "counts", counts_ag)
+    tmp = np.row_stack([counts_target, val_target])
+    s_c_target = flip_matrix(tmp[:, np.argsort(tmp[0, :])], axis=1)
 
-    # creating matrix of number of points in each group and label returned by IsolateSurface func.
-    # Columns are ordered from the biggest to the smallest patch.
-    tmp = np.row_stack([counts_ab, val_ab])
+    # finding center of mass of each group
+    cm_template = []
+    cm_target = []
+    for el1 in s_c_template[1, :]:
+        tmp = patch_template[index_template_bd_ == el1]
+        cm_template.append(np.mean(tmp[:, :3], axis=0))
+    for el2 in s_c_target[1, :]:
+        tmp = patch_target[index_target_bd_ == el2]
+        cm_target.append(np.mean(tmp[:, :3], axis=0))
 
-    # s_c_ab = np.flip(tmp[:, np.argsort(tmp[0, :])], axis=1)
-    s_c_ab = flip_matrix(tmp[:, np.argsort(tmp[0, :])], axis=1)
+    l_template = np.shape(s_c_template)[1]
+    l_target = np.shape(s_c_target)[1]
 
-    tmp = np.row_stack([counts_ag, val_ag])
+    # computing distance matrix between the centers of the groups intra sets
+    d = np.zeros((l_template, l_target))
+    for i in range(l_template):
+        for j in range(l_target):
+            d[i, j] = np.sum((np.array(cm_template[i]) - np.array(cm_target[j])) ** 2)
 
-    s_c_ag = flip_matrix(tmp[:, np.argsort(tmp[0, :])], axis=1)
-
-    # finding center of mass of each group...
-    cm_ab = []
-    cm_ag = []
-    for l in s_c_ab[1, :]:
-        tmp = patch_ab[index_ab_bd_ == l]
-        cm_ab.append(np.mean(tmp[:, :3], axis=0))
-    for l in s_c_ag[1, :]:
-        tmp = patch_ag[index_ag_bd_ == l]
-        cm_ag.append(np.mean(tmp[:, :3], axis=0))
-
-    l_ag = np.shape(s_c_ag)[1]
-    l_ab = np.shape(s_c_ab)[1]
-
-    # computing distance matrix between the centers of the groups intra sets...
-    d = np.zeros((l_ab, l_ag))
-    for i in range(l_ab):
-        for j in range(l_ag):
-            d[i, j] = np.sum((np.array(cm_ab[i]) - np.array(cm_ag[j])) ** 2)
-
-    # associating groups according to the minimal distance...
-    index_ab = []
-    index_ag = []
-    l_min = np.min([l_ag, l_ab])
+    # associating groups according to the minimal distance
+    index_template = []
+    index_target = []
+    l_min = np.min([l_target, l_template])
     for i in range(l_min):
-        if l_min == l_ab:
+        if l_min == l_template:
             x = np.where(d[i, :] == np.min(d[i, :]))[0][0]
-            index_ab.append(i)
-            index_ag.append(x)
+            index_template.append(i)
+            index_target.append(x)
         else:
             x = np.where(d[:, i] == np.min(d[:, i]))[0][0]
-            index_ab.append(x)
-            index_ag.append(i)
+            index_template.append(x)
+            index_target.append(i)
 
-    patch_ab_list = []
-    patch_ag_list = []
+    patch_template_list = []
+    patch_target_list = []
 
-    lab_ab = s_c_ab[1, index_ab]
-    lab_ag = s_c_ag[1, index_ag]
+    lab_template = s_c_template[1, index_template]
+    lab_target = s_c_target[1, index_target]
 
     # defining list of matched patches
     for i in range(l_min):
-        patch_ab_list.append(patch_ab[index_ab_bd_ == lab_ab[i]])
-        patch_ag_list.append(patch_ag[index_ag_bd_ == lab_ag[i]])
+        patch_template_list.append(patch_template[index_template_bd_ == lab_template[i]])
+        patch_target_list.append(patch_target[index_target_bd_ == lab_target[i]])
 
-    return patch_ab_list, patch_ag_list
+    return patch_template_list, patch_target_list
 
 
 def _isolate_isosurface(my_prot, min_v, max_v):
