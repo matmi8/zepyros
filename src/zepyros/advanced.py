@@ -10,7 +10,7 @@ import zepyros.zernike as zf
 mpl.use('Agg')
 
 
-def get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25):
+def get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25, zernike_obj=None):
     """
     Identifies a patch and calculates Zernike polynomials that characterize it
 
@@ -37,6 +37,7 @@ def get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25):
         - polynomial coefficients (`ndarray`)
         - Zernike 2d disk data (`ndarray`)
         - the indices of the surface points belonging to the patch (`array`)
+        - the initialized Zernike2D class (`class`)
     """
     # TODO: passi già la superficie come deve essere
     # lag = len(surf["x"])
@@ -53,7 +54,7 @@ def get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25):
     patch, mask = surf_obj.build_patch(point_ndx=ndx, d_min=.5)
     surf_obj.real_br = mask
 
-    rot_patch, rot_ag_patch_nv = surf_obj.patch_reorient(patch, verso)
+    rot_patch, rot_patch_nv = surf_obj.patch_reorient(patch, verso)
     z = surf_obj.find_origin(rot_patch)
     plane, weights, dist_plane, thetas = surf_obj.create_plane(patch=rot_patch, z_c=z, n_p=n_pixel)
 
@@ -71,8 +72,11 @@ def get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25):
     #     zernike_env.img = new_plane_
     # except:
     #     zernike_env = zf.Zernike2D(new_plane_)
-
-    zernike_env = zf.Zernike2D(new_plane_)
+    if zernike_obj is None:
+        zernike_env = zf.Zernike2D(new_plane_)
+    else:
+        zernike_env = zernike_obj
+        zernike_env.img = new_plane_
     br_coeff = zernike_env.zernike_decomposition(order=int(order))
     disk_data = zernike_env.img
     reduced_disk = disk_data[np.ix_(range(0, 400, 16), range(0, 400, 16))]
@@ -80,7 +84,7 @@ def get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25):
     df_disk = pd.DataFrame(reduced_disk).reset_index().melt('index')
     df_disk.columns = ['row', 'column', 'value']
 
-    return np.absolute(br_coeff), df_disk, mask
+    return np.absolute(br_coeff), df_disk, mask, zernike_env
 
 
 def plot_disk(df_disk, save_path=None):
