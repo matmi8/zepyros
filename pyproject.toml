@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "zepyros"
-version = "0.1.3"
+version = "0.1.4"
 description = "ZErnike Polynomials analYsis of pROtein Shapes. A tool for image characterizarion"
 authors = ["Mattia Miotto"]
 license = "Apache License 2.0"
