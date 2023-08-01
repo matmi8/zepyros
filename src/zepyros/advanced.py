@@ -30,6 +30,8 @@ def get_zernike(surf, radius, ndx, order, verso=1, n_pixel=25, zernike_obj=None)
         1 for the positive direction, -1 for the negative direction (default: ``1``)
     `n_pixel`: int
         number of pixels per side with which the patch will be reconstructed (default: ``25``)
+    `zernike_obj`: class
+        Zernike2D class object already initialized (default ``None``
 
     Return
     ------
