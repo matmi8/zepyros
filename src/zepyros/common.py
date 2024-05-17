@@ -315,8 +315,8 @@ def contact_points(list_1, list_2, thresh):
     """
 
     thresh2 = thresh ** 2
-    contact_1 = [0, 0, 0, 0]
-    contact_2 = [0, 0, 0]
+    contact_1 = np.array([[0, 0, 0, 0]])
+    contact_2 = np.array([[0, 0, 0]])
     l1 = np.shape(list_1)[0]
     # l2 = np.shape(list_2)[0]
 
