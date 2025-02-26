@@ -210,7 +210,7 @@ def plot_coeff(coeff, save_path=None):
         ax.set_yticklabels([int(float(i)) for i in y_label], fontsize=16)
 
     plt.xlabel('Index', size=18)
-    plt.ylabel('Zernike invariants', size=18)
+    plt.ylabel('Zernike descriptors', size=18)
 
     pl_coeff = ax.get_figure()
 
